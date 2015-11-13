@@ -6,6 +6,7 @@ Due to the very early state of the Seafile manager things will very likely break
 ## Requirements
 - curl
 - openssl
+- git
 
 
 ## Install
@@ -15,6 +16,7 @@ Follow the instructions as stated below.
 ```
 cd /opt/
 git clone https://github.com/SeafileDE/seafile-manager.git
+chmod +x seafile-manager/seafile-manager
 ```
 
 ### Save Seafile admin credentials
@@ -25,7 +27,7 @@ git clone https://github.com/SeafileDE/seafile-manager.git
 cat ~/.seafile-manager-credentials
 TOKEN=12345678901234567890123456789
 PROTO=https
-ADDRESS=cloud.seafile.de
+ADDRESS=app.seafile.de
 ```
 
 - Restrict access of ~/.seafile-manager-credentials to the owner
