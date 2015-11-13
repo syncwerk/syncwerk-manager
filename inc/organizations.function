@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Uncomment to run in verbose mode
+#set -x
+
+function add-organization {
+# Add Organization
+#
+# This API is only used internally to create an organization account in seacloud.cc.
+#
+# POST ${PROTO}://${ADDRESS}/api2/organization/
+#
+# Request parameters
+#
+# username
+# password
+# org_name
+# prefix
+# quota
+# member_limit
+#
+# Sample request
+#
+curl -w "\n" -X POST -d "username=example@example.com&password=example&org_name=example&prefix=example&quota=100&member_limit=10" -H "Authorization: Token ccdff90e4d1efe76b2b3d91c06b027a5cff189d4" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/organization/
+#
+# Sample response
+#
+#    "success"
+#
+#
+#
+}

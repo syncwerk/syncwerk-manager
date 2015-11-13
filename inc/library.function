@@ -1,0 +1,453 @@
+#!/bin/bash
+#
+# Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Uncomment to run in verbose mode
+#set -x
+
+function get-default-library {
+# Get Default Library
+#
+# GET ${PROTO}://${ADDRESS}/api2/default-repo/
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/default-repo/"
+#
+# Sample response
+#
+#    {
+#        "repo_id": "691b3e24-d05e-43cd-a9f2-6f32bd6b800e",
+#        "exists": true
+#    }
+}
+
+
+function create-default-library {
+# Create Default Library
+#
+# POST ${PROTO}://${ADDRESS}/api2/default-repo/
+#
+# Sample request
+#
+curl -w "\n" -X POST -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/default-repo/"
+#
+# Sample response
+#
+#    {
+#        "repo_id": "691b3e24-d05e-43cd-a9f2-6f32bd6b800e",
+#        "exists": true
+#    }
+}
+
+
+function list-libraries {
+# List Libraries
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/
+#
+# Sample response
+#
+#    [
+#    {
+#        "permission": "rw",
+#        "encrypted": false,
+#        "mtime": 1400054900,
+#        "owner": "user@mail.com",
+#        "id": "f158d1dd-cc19-412c-b143-2ac83f352290",
+#        "size": 0,
+#        "name": "foo",
+#        "type": "repo",
+#        "virtual": false,
+#        "desc": "new library",
+#        "root": "0000000000000000000000000000000000000000"
+#    },
+#    {
+#        "permission": "rw",
+#        "encrypted": false,
+#        "mtime": 1400054802,
+#        "owner": "user@mail.com",
+#        "id": "0536b11a-a5fd-4482-9314-728cb3472f54",
+#        "size": 0,
+#        "name": "foo",
+#        "type": "repo",
+#        "virtual": false,
+#        "desc": "new library",
+#        "root": "0000000000000000000000000000000000000000"
+#    }
+#    ]
+}
+
+
+function get-library-info {
+# Get Library Info
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/
+#
+# Request parameters
+#
+# repo-id
+#
+# Sample request
+#
+curl -w "\n" -G -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/632ab8a8-ecf9-4435-93bf-f495d5bfe975/
+#
+# Sample response
+#
+#    {
+#    "encrypted": false,
+#    "password_need": null,
+#    "mtime": null,
+#    "owner": "self",
+#    "id": "632ab8a8-ecf9-4435-93bf-f495d5bfe975",
+#    "size": 1356155,
+#    "name": "org",
+#    "root": "b5227040de360dd22c5717f9563628fe5510cbce",
+#    "desc": "org file",
+#    "type": "repo"
+#    }
+}
+
+
+function get-library-owner {
+# Get Library Owner
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/owner/
+#
+# Request parameters
+#
+# repo-id
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/owner/
+#
+# Sample response
+#
+#    {
+#    "owner": "foo@foo.com"
+#    }
+#
+# Errors
+#
+# 403 Permission error, only administrator can perform this action
+}
+
+
+function get-library-history {
+# Get Library History
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/history/
+#
+# Request parameters
+#
+# repo-id
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/history/
+#
+# Sample response
+#
+#    {"commits": [{"rev_file_size": 0, "rev_file_id": null, "ctime": 1398045167, "creator_name": "imwhatiam123@example.com", "creator": "0000000000000000000000000000000000000000", "root_id": "ca2625da6be6e211ddd584615ef3bfaa531e66aa", "rev_renamed_old_path": null, "parent_id": "205c469f0830df09b13024601524058757a43128", "new_merge": false, "repo_id": "691b3e24-d05e-43cd-a9f2-6f32bd6b800e", "desc": "Modified \"api.md\"", "id": "eb62721812e0c3122889b5facde971b353ad176b", "conflict": false, "second_parent_id": null}, {"rev_file_size": 0, "rev_file_id": null, "ctime": 1398045158, "creator_name": "imwhatiam123@example.com", "creator": "0000000000000000000000000000000000000000", "root_id": "0b7a31adf4ea8b29ad5a5920420b548da11dd32f", "rev_renamed_old_path": null, "parent_id": "2ba85ee6072efea51a3483843ea7de9b6d1d1eb2", "new_merge": false, "repo_id": "691b3e24-d05e-43cd-a9f2-6f32bd6b800e", "desc": "Added \"api.md\"", "id": "205c469f0830df09b13024601524058757a43128", "conflict": false, "second_parent_id": null}], "page_next": false}
+}
+
+
+function create-library {
+# Create Library
+#
+# POST ${PROTO}://${ADDRESS}/api2/repos/
+#
+# Request parameters
+#
+# name
+# desc (defaults to "new repo")
+# passwd (needed by encrypt library)
+#
+# Sample request
+#
+curl -w "\n" -d "name=foo&desc=new library" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/
+#
+# Sample response
+#
+#    {
+#    "encrypted": "",
+#    "enc_version": 0,
+#    "repo_id": "f15811fd-5c19-412c-b143-2ac83f352290",
+#    "magic": "",
+#    "relay_id": "c5e41170db250ea497075e2911104faf0105b7fb",
+#    "repo_version": 1,
+#    "relay_addr": "${ADDRESS}",
+#    "token": "c1f3defe9ba408cd7964427ec276843e9d10c23b",
+#    "relay_port": "10001",
+#    "random_key": "",
+#    "email": "user@mail.com",
+#    "repo_name": "foo"
+#    }
+#
+# Success
+#
+#   Response code 200 and newly created library information are returned.
+#
+# Errors
+#
+# 400 Library name missing.
+# 520 Operation failed.
+}
+
+
+function check-create-sub-library {
+# Check/Create Sub Library
+#
+# check if a dir has a corresponding sub_repo, if it does not have, create one
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/sub_repo/?p=/\&name=sub_lib
+#
+# Request parameters
+#
+# repo-id
+# p
+# name
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/sub_repo/?p=/\&name=sub_lib
+#
+# Sample response
+#
+#    {"sub_repo_id": "c0a3283c-013c-4a7c-8f68-006f06fa6dec"}
+#
+# Errors
+#
+# 400 Argument missing
+# 500 INTERNAL SERVER ERROR
+}
+
+
+function delete-library {
+# Delete Library
+#
+# DELETE ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/
+#
+# Sample request
+#
+curl -w "\n" -X DELETE -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/8f5f2222-72a8-454f-ac40-8397c5a556a8/
+#
+# Sample response
+#
+# "success"
+#
+# Errors
+#
+# 400 Library does not exist.
+#
+# 403 Only library owner can perform this operation.
+}
+
+
+function decrypt-library {
+# Decrypt Library
+#
+# POST ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/
+#
+# Request parameters
+#
+# password
+#
+# Sample request
+#
+curl -w "\n" -d "password=123" -H 'Authorization: Token e6a33d61954f219a96b60f635cf02717964e4385' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/0c2465a5-4753-4660-8a22-65abec9ec8d0/
+#
+# Sample response
+#
+# "success"
+#
+# Errors
+#
+# 400 Incorrect password
+# 409 Repo is not encrypt
+# 500 Internal server error
+}
+
+
+function create-public-library {
+# Create Public Library
+#
+# POST ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/public/
+#
+# Request parameters
+#
+# repo-id
+#
+# Sample request
+#
+curl -w "\n" -X POST -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/public/
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 200 OK
+#    ...
+#
+# Success
+#
+#    Response code is 200(OK), and a string "success" is returned.
+#
+# Errors
+#
+# 404 Repo not found
+# 403 Forbid to access this repo
+# 500 INTERNAL SERVER ERROR, Unable to make repo public
+}
+
+
+function remove-public-library {
+# Remove Public Library
+#
+# DELETE ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/public/
+#
+# Request parameters
+#
+# repo-id
+#
+# Sample request
+#
+curl -w "\n" -X DELETE -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/public/
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 200 OK
+#    ...
+#
+# Success
+#
+#    Response code is 200(OK), and a string "success" is returned.
+#
+# Errors
+#
+# 404 Repo not found
+# 403 Forbid to access this repo
+# 500 INTERNAL SERVER ERROR, Unable to remove public repo
+}
+
+
+function fetch-library-download-info {
+# Fetch library download info
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/download-info/
+#
+# Request parameters
+#
+# repo-id
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/download-info/
+#
+# Sample response
+#
+#    {
+#    "applet_root": "${PROTO}://localhost:13420",
+#    "relay_addr": "localhost",
+#    "token": "46acc4d9ca3d6a5c7102ef379f82ecc1edc629e1",
+#    "repo_id": "dae8cecc-2359-4d33-aa42-01b7846c4b32",
+#    "relay_port": "10002",
+#    "encrypted": "",
+#    "repo_name": "test",
+#    "relay_id": "8e4b13b49ca79f35732d9f44a0804940d985627c",
+#    "email": "foo@foo.com"
+#    }
+}
+
+
+function list-virtual-libraries {
+# List Virtual Libraries
+#
+# GET ${PROTO}://${ADDRESS}/api2/virtual-repos/
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/virtual-repos/"
+#
+# Sample response
+#
+#    {"virtual-repos":
+#        [
+#            {"virtual_perm": "rw", "store_id": null, "worktree_invalid": false, "encrypted": false, "origin_repo_name": "lian", "last_modify": 0, "no_local_history": false, "head_branch": null, "last_sync_time": 0, "id": "51344de8-456f-4dc7-ac08-718827994252", "size": 0, "share_permission": null, "worktree_changed": false, "worktree_checktime": 0, "origin_path": "/lian", "is_virtual": true, "origin_repo_id": "a582d3bc-bcf5-421e-9125-741fa56d18d4", "version": 1, "random_key": null, "is_original_owner": true, "shared_email": null, "enc_version": 0, "head_cmmt_id": "bc666fdc60d2352b9f6a0324ac64168d43724eed", "desc": null,
+curl -w "\n"index_corrupted": false, "magic": null, "name": "lian", "worktree": null, "auto_sync": false, "relay_id": null},
+#            {"virtual_perm": "rw", "store_id": null, "worktree_invalid": false, "encrypted": false, "origin_repo_name": "lian", "last_modify": 0, "no_local_history": false, "head_branch": null, "last_sync_time": 0, "id": "c0a3283c-013c-4a7c-8f68-006f06fa6dec", "size": 0, "share_permission": null, "worktree_changed": false, "worktree_checktime": 0, "origin_path": "/", "is_virtual": true, "origin_repo_id": "a582d3bc-bcf5-421e-9125-741fa56d18d4", "version": 1, "random_key": null, "is_original_owner": true, "shared_email": null, "enc_version": 0, "head_cmmt_id": "ff18229aadc9acc73ad481278d5b4c42b3353aa0", "desc": null, "index_corrupted": false, "magic": null, "name": "123", "worktree": null, "auto_sync": false, "relay_id": null}
+#        ]
+#    }
+}
+
+
+function search-libraries {
+# Search Libraries
+#
+# GET ${PROTO}://${ADDRESS}/api2/search/
+#
+# Request parameters
+#
+# q
+# per_page (optional)
+#
+# Sample request
+#
+curl -w "\n" -G -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/search/?q=keyword
+#
+# Sample response
+#
+#    {
+#        "has_more": false,
+#        "total": 3,
+#        "results": [
+#            {
+#                "repo_id": "691b3e24-d05e-43cd-a9f2-6f32bd6b800e",
+#                "name": "api.md",
+#                "oid": "8ea78453bb474359cd9d8e2c4c4d8d9cbdcef0a2",
+#                "last_modified": 1398045167,
+#                "fullpath": "/api.md",
+#                "size": 18939
+#            },
+#            {
+#                "repo_id": "c5509062-9bca-4933-a7e0-c6da1d5f82be",
+#                "name": "home.md",
+#                "oid": "dda57aaffa5179829e064c7d0c142f47a8a65d3b",
+#                "last_modified": 1397096831,
+#                "fullpath": "/home.md",
+#                "size": 1954
+#            },
+#            {
+#                "repo_id": "c5509062-9bca-4933-a7e0-c6da1d5f82be",
+#                "name": "\u5e38\u89c1\u5b89\u88c5\u95ee\u9898.md",
+#                "oid": "8573f982eeb478b932a55ec13218f4f90a7c5a27",
+#                "last_modified": 1397188959,
+#                "fullpath": "/\u5e38\u89c1\u5b89\u88c5\u95ee\u9898.md",
+#                "size": 1050
+#            }
+#        ]
+#    }
+#
+# Errors
+#
+# 404 Search not supported.
+# 400 Missing argument q.
+}

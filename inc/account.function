@@ -1,0 +1,227 @@
+#!/bin/bash
+#
+# Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Uncomment to run in verbose mode
+#set -x
+
+function get-account-info {
+# Get Account Info
+#
+# GET ${PROTO}://${ADDRESS}/api2/accounts/{email}/
+#
+# Request parameters
+#
+# Action
+#
+curl -w "\n" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${1}/
+#
+# Sample response
+#
+#    {
+#    "is_staff": false,
+#    "is_active": true,
+#    "id": 2,
+#    "create_time": 1356061187741686,
+#    "usage": 651463187,
+#    "total": 107374182400,
+#    "email": "foo@foo.com"
+#    }
+#
+# Errors
+#
+# 403 Permission error, only administrator can perform this action
+}
+
+
+# FIXME this one seems rather useless since it only retrievs a limited set of personal infos about the TOKEN holder...
+function check-account-info {
+# Check Account Info
+#
+# GET ${PROTO}://${ADDRESS}/api2/account/info/
+#
+#
+# Sample request
+#
+curl -w "\n" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/account/info/
+#
+# Sample response
+#
+#    {
+#    "usage": 26038531,
+#    "total": 104857600,
+#    "email": "foo@foo.com"
+#    }
+#
+# Errors
+#
+# 403 Invalid token
+# }
+}
+
+
+function create-account {
+# Create Account
+#
+# PUT ${PROTO}://${ADDRESS}/api2/accounts/{email}/
+#
+# Request parameters
+#
+# password
+# is_staff (defaults to False)
+# is_active (defaults to True)
+#
+# Sample request
+#
+curl -w "\n" -X PUT -d "password=${2}" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${1}/
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 201 CREATED
+#    < Location: ${PROTO}://${ADDRESS}/api2/accounts/newaccount@example.com/
+#    ...
+#
+#    "success"
+#
+# Success
+#
+#    Response code 201(Created) is returned and the Location header provides shared link.
+#
+# Errors
+#
+# 403 Permission error, only administrator can perform this action
+}
+
+
+function update-account {
+# Update Account
+#
+# PUT ${PROTO}://${ADDRESS}/api2/accounts/{email}/
+#
+# Request parameters
+#
+# At least one of followings:
+#
+# password
+# is_staff
+# is_active
+# name
+# note
+# storage
+#
+# Sample request
+#
+curl -w "\n" -X PUT -d "is_active=${2}&storage=${3}" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${1}/
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 200 OK
+#    ...
+#
+#    "success"
+#
+# Success
+#
+#    Response code 200(OK) is returned.
+#
+# Errors
+#
+# 400 Bad Request, keyword password is required
+# 403 Permission error, only administrator can perform this action
+}
+
+function update-password {
+curl -w "\n" -X PUT -d "password=${2}" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${1}/
+}
+
+function enable-admin {
+curl -w "\n" -X PUT -d "is_staff=true" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${1}/
+}
+
+function disable-admin {
+curl -w "\n"  -X PUT -d "is_staff=false" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${1}/
+}
+
+function activate-account {
+curl -w "\n" -X PUT -d "is_active=true" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${1}/
+}
+
+function deactivate-account {
+curl -w "\n" -X PUT -d "is_active=false" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${1}/
+}
+
+function update-note {
+curl -w "\n" -X PUT -d "note=${2}" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${1}/
+}
+
+function update-storage {
+curl -w "\n" -X PUT -d "storage=${2}" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${1}/
+}
+
+
+function migrate-account {
+# Migrate Account
+#
+# POST ${PROTO}://${ADDRESS}/api2/accounts/{email}/
+#
+# Request parameters
+#
+# op
+# to_user this user must exist
+#
+# Sample request
+#
+curl -w "\n" -d "op=migrate&to_user=user2@mail.com" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/user@mail.com/
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 200 OK
+#    ...
+#
+#    "success"
+#
+# Success
+#
+#    Response code 200(OK) is returned.
+#
+# Errors
+#
+# 400 Bad Request, arguments are missing or invalid
+# 403 Permission error, only administrator can perform this action
+}
+
+
+function delete-account {
+# Delete Account
+#
+# DELETE ${PROTO}://${ADDRESS}/api2/accounts/{email}/
+#
+#
+# Sample request
+#
+curl -w "\n" -X DELETE -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/newaccount@example.com/
+#
+# Sample response
+#
+#    "success"
+#
+# Errors
+#
+# 403 Permission error, only administrator can perform this action
+}

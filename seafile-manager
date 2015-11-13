@@ -1,0 +1,210 @@
+#!/bin/bash
+#
+# Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Uncomment to run in verbose mode
+#set -x
+
+# Color coding error messages
+PRNTF_FAIL_START="\n\e[1;31m"
+PRNTF_FAIL_END="\033[0m"
+PRNTF_USAGE_START="\n\e[1;32m"
+PRNTF_USAGE_END="\033[0m\n\n"
+
+
+# Import Seafile admin credentials
+PERMS=$(stat ~/.seafile-manager-credentials | sed -n '/^Access: (/{s/Access: (\([0-9]\+\).*$/\1/;p}')
+if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0400 on ~/.seafile-manager-credentials and try again.; exit; else . ~/.seafile-manager-credentials; fi
+
+
+# Load functions
+. /opt/seafile-manager/inc/*.function
+
+
+# Cases
+case "$1" in
+
+ get-account-info)
+        USAGE="Usage: ${0} get-account-info foo@foo.com"
+        if [ -z ${2+x} ]; then printf "${PRNTF_FAIL_START}Error: Account email is missing.${PRNTF_FAIL_END}${PRNTF_USAGE_START}${USAGE}${PRNTF_USAGE_END}"; exit ; fi
+        get-account-info ${2}
+        ;;
+
+ check-account-info)
+        USAGE="Usage: ${0} check-account-info"
+        check-account-info
+        ;;
+
+ create-account)
+        USAGE="Usage: ${0} create-account foo@foo.com secret-password"
+        if [ -z ${2+x} ]; then echo "Account email is missing."; echo "${USAGE}"; exit; fi
+        if [ -z ${3+x} ]; then echo "Password is missing."; echo "${USAGE}"; exit; fi
+        create-account ${2} ${3}
+        ;;
+
+ update-password)
+        USAGE="Usage: ${0} update-password foo@foo.com secret-password"
+        if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+        if [ -z ${3+x} ]; then echo "Password is missing."; echo "${USAGE}"; exit; fi
+        update-password ${2} ${3}
+        ;;
+
+ enable-admin)
+        USAGE="Usage: ${0} enable-admin foo@foo.com"
+        if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+        enable-admin ${2}
+        ;;
+
+ disable-admin)
+        USAGE="Usage: ${0} disable-admin foo@foo.com"
+        if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+        disable-admin ${2}
+        ;;
+
+ activate-account)
+        USAGE="Usage: ${0} activate-account foo@foo.com"
+        if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+        activate-account ${2}
+        ;;
+
+
+
+
+ *)
+        echo "Usage: ${0} {get-account-info|check-account-info|create-account}"
+
+# This may be used eventually - when all functions are setup
+# Build new list with dev/generate-formated-usage-string helper
+: <<DISABLED
+cat <<EOF
+Account
+------------------------------------------------------------------------
+check-account-info | create-account | delete-account | get-account-info
+migrate-account | update-account
+
+
+
+Avatar
+------------------------------------------------------------------------
+get-group-avatar | get-user-avatar
+
+
+
+Batch
+------------------------------------------------------------------------
+batch-delete
+
+
+
+Blocks
+------------------------------------------------------------------------
+get-update-blocks-link | get-upload-blocks-link
+
+
+
+Directory
+------------------------------------------------------------------------
+create-new-directory | delete-directory | download-directory | list-directory-entries
+rename-directory | share-directory
+
+
+
+File Activities
+------------------------------------------------------------------------
+get-file-activities
+
+
+
+File
+------------------------------------------------------------------------
+copy-file | create-file | delete-file | download-file
+download-file-from-a-revision | get-file-detail | get-file-history | lock-file
+move-file | rename-file | revert-file | unlock-file
+
+
+
+Group And Contacts
+------------------------------------------------------------------------
+list-group-and-contacts
+
+
+
+Group
+------------------------------------------------------------------------
+add-a-group | delete-a-group-member | delete-group | get-group-message-detail
+get-group-message-replies | get-group-messages | group-member | list-groups
+rename-group | reply-a-group-message | send-a-group-message
+
+
+
+Library
+------------------------------------------------------------------------
+check-create-sub-library | create-default-library | create-library | create-public-library
+decrypt-library | delete-library | fetch-library-download-info | get-default-library
+get-library-history | get-library-info | get-library-owner | list-libraries
+list-virtual-libraries | remove-public-library | search-libraries
+
+
+
+Organizations
+------------------------------------------------------------------------
+add-organization
+
+
+
+Server
+------------------------------------------------------------------------
+get-server-information
+
+
+
+Shared Library
+------------------------------------------------------------------------
+list-be-shared-libraries | list-shared-libraries | share-a-library | unshare-a-library
+
+
+
+Shared Link
+------------------------------------------------------------------------
+create-download-link-for-directory-with-password-and-expire-date | create-download-link-for-file | create-file-share-link | create-upload-link-for-directory
+delete-file-share-link | list-dir-entry-in-dir-download-link | list-file-share-links
+
+
+
+Star
+------------------------------------------------------------------------
+list-starred-files | star-a-file | unstar-a-file
+
+
+
+Thumbnail
+------------------------------------------------------------------------
+get-thumbnail
+
+
+
+Upload File
+------------------------------------------------------------------------
+fixme-upload-file | get-upload-link | update-file | upload-file
+
+
+Example usage: ${0} check-account-info
+EOF
+DISABLED
+
+        exit 2
+        ;;
+esac

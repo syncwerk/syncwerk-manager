@@ -1,0 +1,37 @@
+#!/bin/bash
+#
+# Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Uncomment to run in verbose mode
+#set -x
+
+function get-thumbnail {
+# Get Thumbnail
+#
+# Get Thumbnail Image
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/{repo_id}/thumbnail/
+#
+# Request parameters
+#
+# repo_id
+# p
+# size
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token 40f9a510a0629430865dc199a3880898ad2e48fc' ${PROTO}://${ADDRESS}/api2/repos/fbead5d0-4817-4446-92f3-7ac8e6a8e5f5/thumbnail/?p=/5.jpg\&size=123 > thumbnail.png
+}

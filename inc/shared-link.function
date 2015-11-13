@@ -1,0 +1,131 @@
+#!/bin/bash
+#
+# Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Uncomment to run in verbose mode
+#set -x
+
+function list-file-share-links {
+# List File Share Links
+#
+# GET ${PROTO}://${ADDRESS}/api2/shared-links/
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/shared-links/"
+#
+# Sample response
+#
+#    {"fileshares": [{"username": "foo@foo.com", "repo_id": "a582d3bc-bcf5-421e-9125-741fa56d18d4", "ctime": null, "s_type": "d", "token": "e410827494", "view_cnt": 0, "path": "/123/"}, {"username": "foo@foo.com", "repo_id": "affc837f-7fdd-4e91-b88a-32caf99897f2", "ctime": null, "s_type": "f", "token": "0ae587a7d1", "view_cnt": 0, "path": "/lian123.md"}]}
+}
+
+
+function create-file-share-link {
+# Create File Share Link
+#
+# PUT ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/file/shared-link/
+#
+# Request parameters
+#
+# repo-id
+# p (Path to the file)
+# share_type (optional, `download` or `upload`, default `download`)
+# password (optional)
+# expire (optional)
+#
+# Sample request
+#
+echo FIXME
+}
+
+
+function create-download-link-for-file {
+# Create download link for file
+curl -w "\n" -X PUT -d "p=/foo.md" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/afc3b694-7d4c-4b8a-86a4-89c9f3261b12/file/shared-link/
+}
+
+
+function create-download-link-for-directory-with-password-and-expire-date {
+# Create download link for directory with password and expire date
+#
+curl -w "\n" -X PUT -d "password=password&expire=6&p=/123/" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/afc3b694-7d4c-4b8a-86a4-89c9f3261b12/file/shared-link/
+}
+
+
+function create-upload-link-for-directory {
+# Create upload link for directory
+#
+curl -w "\n" -X PUT -d "share_type=upload&p=/123/" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/afc3b694-7d4c-4b8a-86a4-89c9f3261b12/file/shared-link/
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 201 CREATED
+#    < Location: ${PROTO}://${ADDRESS}/f/9b437a7e55/
+#    ...
+#
+# Success
+#
+#    Response code 201(Created) is returned and the Location header provides shared link.
+#
+# Errors
+#
+# 400 Path is missing
+# 400 Password(if link is encrypted) is missing
+# 500 Internal server error
+}
+
+
+function delete-file-share-link {
+# Delete File Share Link
+#
+# DELETE ${PROTO}://${ADDRESS}/api2/shared-links/?t=0ae587a7d1
+#
+# Request parameters
+#
+# t
+#
+# Sample request
+#
+curl -w "\n" -X DELETE -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/shared-links/?t=0ae587a7d1"
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 200 OK
+#    ...
+}
+
+
+function list-dir-entry-in-dir-download-link {
+# List Dir entry in Dir Download Link
+#
+# GET ${PROTO}://${ADDRESS}/api2/d/{token}/dir/
+#
+# Request parameters
+#
+# token (upload link token)
+# p (sub folder path)
+# password (if link is encrypted)
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/d/3af7c46595/dir/?p=/subfolder/"
+#
+# Sample response
+#
+#    [{"mtime": 1436846750, "type": "dir", "name": "sadof", "id": "1806dbdb700b7bcd49e6275107c7ccf7b3ea1776"}, {"id": "bdb06f6de972c42893fda590ac954988b562429c", "mtime": 1436431020, "type": "file", "name": "test.mdert", "size": 20}]
+}

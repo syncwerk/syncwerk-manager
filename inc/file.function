@@ -1,0 +1,434 @@
+#!/bin/bash
+#
+# Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Uncomment to run in verbose mode
+#set -x
+
+function download-file {
+# Download File
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/file/?p=/foo
+#
+# Request parameters
+#
+# repo-id
+# p
+# reuse (optional): Set `resue` to `1` if you want the generated download link can be accessed more than once in one hour.
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' '${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c&reuse=1'
+#
+# Sample response
+#
+#    "${PROTO}://${ADDRESS}:8082/files/adee6094/foo.c"
+#
+# Errors
+#
+# 400 Path is missing
+# 404 File not found
+# 520 Operation failed.
+}
+
+
+function get-file-detail {
+# Get File Detail
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/file/detail/?p=/foo.c
+#
+# repo-id
+# p
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/detail/?p=/foo.c
+#
+# Sample response
+#
+#    {
+#    "id": "013d3d38fed38b3e8e26b21bb3463eab6831194f",
+#    "mtime": 1398148877,
+#    "type": "file",
+#    "name": "foo.py",
+#    "size": 22
+#    }
+#
+# Errors
+#
+# 400 Path is missing
+# 520 Operation failed.
+}
+
+
+function get-file-history {
+# Get File History
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/file/history/?p=/foo.c
+#
+# Request parameters
+#
+# repo-id
+# p
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/history/?p=/foo.c
+#
+# Sample response
+#
+#    {
+#    "commits":
+#        [
+#            {
+#            "rev_file_size": 0,
+#            "repo_id": "a582d3bc-bcf5-421e-9125-741fa56d18d4",
+#            "ctime": 1398149763,
+#            "creator_name": "foo@foo.com",
+#            "creator": "0000000000000000000000000000000000000000",
+#            "root_id": "b64d413d9894c9206beac3faf9c2a0d75b4a8ebf",
+#            "rev_renamed_old_path": null,
+#            "parent_id": "8e546762e1657ab22dad83e9cb1e5ea31a767c9a",
+#            "new_merge": false,
+#            "version": 1,
+#            "conflict": false,
+#            "desc": "Added \"foo.c\"",
+#            "id": "9464f7499bfa7363d563282361339eaf96a93318",
+#            "rev_file_id": "0000000000000000000000000000000000000000",
+#            "second_parent_id": null
+#            },
+#            {
+#            "rev_file_size": 0,
+#            "repo_id": "a582d3bc-bcf5-421e-9125-741fa56d18d4",
+#            "ctime": 1398146059,
+#            "creator_name": "foo@foo.com",
+#            "creator": "0000000000000000000000000000000000000000",
+#            "root_id": "572413414257c76039897e00aeb35f819471206b",
+#            "rev_renamed_old_path": null,
+#            "parent_id": "f977bdb0ebb205645c3b42216c2817e511c3f68f",
+#            "new_merge": false,
+#            "version": 1,
+#            "conflict": false,
+#            "desc": "Added \"foo.c\"",
+#            "id": "a1ec20709675f4dc8db825cdbca296be245d189b",
+#            "rev_file_id": "0000000000000000000000000000000000000000",
+#            "second_parent_id": null
+#            }
+#        ]
+#    }
+#
+# Errors
+#
+# 400 Path is missing
+# 404 File not found
+}
+
+
+function download-file-from-a-revision {
+# Download File From a Revision
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/file/revision/?p=/foo.c&commit_id=a1ec20709675f4dc8db825cdbca296be245d189b
+#
+# Request parameters
+#
+# repo-id
+# p
+# commit_id
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/revision/?p=/foo.c\&commit_id=a1ec20709675f4dc8db825cdbca296be245d189b
+#
+# Sample response
+#
+#    "${PROTO}://${ADDRESS}:8082/files/adee6094/foo.c"
+#
+# Errors
+#
+# 400 Path is missing
+# 404 Revision not found
+}
+
+
+function create-file {
+# Create File
+#
+# POST ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/file/?p=/foo.c
+#
+# Request parameters
+#
+# repo-id
+# p
+# operation
+#
+# Sample request
+#
+curl -w "\n" -d "operation=create" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.1 201 CREATED
+#    ...
+#    "success"
+#
+# Success
+#
+#   Response code is 201, and a string `"success"` is returned.
+#
+# Errors
+#
+# 403 FORBIDDEN, You do not have permission to move file
+# 520 OPERATION FAILED, fail to create file
+}
+
+
+function rename-file {
+# Rename File
+#
+# POST ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/file/?p=/foo.c
+#
+# Request parameters
+#
+# repo-id
+# p
+# operation
+# newname
+#
+# Sample request
+#
+curl -w "\n" -d "operation=rename&newname=newfoo.c" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.1 301 MOVED PERMANENTLY
+#    ...
+#    "success"
+#
+# Success
+#
+#   Response code is 301, and a string `"success"` is returned.
+#
+# Errors
+#
+# 400 BAD REQUEST, Path is missing or invalid(e.g. p=/) or newname is missing(newname too long)
+# 403 FORBIDDEN, You do not have permission to rename file
+# 404 NOT FOUND, repo not found
+# 409 CONFLICT, the newname is the same to the old
+# 520 OPERATION FAILED, fail to rename file
+}
+
+
+function lock-file {
+# Lock File
+#
+# PUT ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/file/
+#
+# Request parameters
+#
+# repo-id
+# p
+# operation
+#
+# Sample request
+#
+curl -w "\n" -X PUT -d "operation=lock&p=/foo.c" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 200 OK
+#    ...
+#    "success"
+#
+# Success
+#
+#   Response code is 200, and a string `"success"` is returned.
+#
+# Errors
+#
+# 400 BAD REQUEST, Path is missing or invalid(e.g. p=/)
+# 403 FORBIDDEN, You do not have permission to lock file
+# 404 NOT FOUND, repo not found
+# 520 OPERATION FAILED, fail to lock file
+}
+
+
+function unlock-file {
+# Unlock File
+#
+# PUT ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/file/
+#
+# Request parameters
+#
+# repo-id
+# p
+# operation
+#
+# Sample request
+#
+curl -w "\n" -X PUT -d "operation=unlock&p=/foo.c" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 200 OK
+#    ...
+#    "success"
+#
+# Success
+#
+#   Response code is 200, and a string `"success"` is returned.
+#
+# Errors
+#
+# 400 BAD REQUEST, Path is missing or invalid(e.g. p=/)
+# 403 FORBIDDEN, You do not have permission to lock file
+# 404 NOT FOUND, repo not found
+# 520 OPERATION FAILED, fail to unlock file
+}
+
+
+function move-file {
+# Move File
+#
+# POST ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/file/?p=/foo.c
+#
+# Request parameters
+#
+# repo-id
+# p
+# operation
+# dst_repo
+# dst_dir
+#
+# Sample request
+#
+curl -w "\n" -d "operation=move&dst_repo=affc837f-7fdd-4e91-b88a-32caf99897f2&dst_dir=/" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.1 301 MOVED PERMANENTLY
+#    ...
+#    "success"
+#
+# Success
+#
+#   Response code is 301, and a string `"success"` is returned.
+#
+# Errors
+#
+# 400 BAD REQUEST, Path is missing or invalid(e.g. p=/)
+# 403 FORBIDDEN, You do not have permission to move file
+# 404 NOT FOUND, repo not found
+# 500 INTERNAL SERVER ERROR
+}
+
+
+function copy-file {
+# Copy File
+#
+# POST ${PROTO}://${ADDRESS}/api2/repos/{repo_id}/fileops/copy/
+#
+# Request parameters
+#
+# p: source folder path, defaults to `"/"`
+# file_names: list of file/folder names to copy. Multiple file/folder names can be seperated by `:`.
+# dst_repo: the destination repo id
+# dst_dir: the destination folder in `dst_repo`
+#
+# Sample request
+#
+curl -w "\n" -d "dst_repo=73ddb2b8-dda8-471b-b7a7-ca742b07483c&dst_dir=/&file_names=foo.c" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/repos/c7436518-5f46-4296-97db-2fcba4c8c8db/fileops/copy/"
+#
+# Sample response
+#
+#    "success"
+#
+# Errors
+#
+# 400 missing argument
+# 403 You do not have permission to copy file
+# 404 repo not found
+# 502 failed to copy file
+}
+
+
+function revert-file {
+# Revert File
+#
+# PUT ${PROTO}://${ADDRESS}/api2/repos/{repo_id}/file/revert/
+#
+# Request parameters
+#
+# repo_id
+# p
+# commit_id
+#
+# Sample request
+#
+curl -w "\n" -X PUT -d "commit_id=a1ec20709675f4dc8db825cdbca296be245d189b&p=/foo.c" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/8f5f2222-72a8-454f-ac40-8397c5a556a8/file/revert/
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 200 OK
+#    ...
+#
+#    {"ret": 0}
+#
+# Success
+#
+#    Response code 200(OK) is returned.
+#
+# Errors
+#
+# 400 Path is missing
+}
+
+
+function delete-file {
+# Delete File
+#
+# DELETE ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/file/?p=/foo
+#
+# Request parameters
+#
+# repo-id
+# p
+#
+# Sample request
+#
+curl -w "\n" -X DELETE -v  -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 200 OK
+#    ...
+#    "success"
+#
+# Errors
+#
+# 400 Path is missing
+# 520 Operation failed.
+#
+# Note
+#
+#   This can also be used to delete directory.
+}

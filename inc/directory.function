@@ -1,0 +1,212 @@
+#!/bin/bash
+#
+# Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Uncomment to run in verbose mode
+#set -x
+
+function list-directory-entries {
+# List Directory Entries
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/
+#
+# repo-id
+# p (optional): The path to a directory. If `p` is missing, then defaults to '/' which is the top directory.
+# oid (optional): The object id of the directory. The object id is the checksum of the directory contents.
+# t (optional): If set `t` argument as `f`, will only return file entries, and `d` for only dir entries.
+# recursive (optional): If set `t` argument as `d` AND `recursive` argument as `1`, return all dir entries recursively
+#
+# Sample request
+#
+curl -w "\n" -H "Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/99b758e6-91ab-4265-b705-925367374cf0/dir/?p=/foo
+#
+# Sample response
+#
+#   If oid is the same as the current oid of the directory, returns `"uptodate"` , else returns
+#
+#    [
+#    {
+#        "id": "0000000000000000000000000000000000000000",
+#        "type": "file",
+#        "name": "test1.c",
+#        "size": 0
+#    },
+#    {
+#        "id": "e4fe14c8cda2206bb9606907cf4fca6b30221cf9",
+#        "type": "dir",
+#        "name": "test_dir"
+#    }
+#    ]
+#
+# Errors
+#
+# 404 The path is not exist.
+# 440 Repo is encrypted, and password is not provided.
+# 520 Operation failed..
+}
+
+
+function create-new-directory {
+# Create New Directory
+#
+# POST ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/
+#
+# repo-id
+# p
+# operation=mkdir (post)
+#
+# Sample request
+#
+curl -w "\n" -d  "operation=mkdir" -v  -H 'Authorization: Tokacd9c6ccb8133606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 201 CREATED
+#    < Location: ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
+#    ...
+#
+#    "success"
+#
+# Success
+#
+#   Response code 201(Created) is returned, and Location header provides the url of created directory.
+#
+# Errors
+#
+# 400 Path is missing or invalid(e.g. p=/)
+# 520 Operation failed.
+#
+# Notes
+#
+#   Newly created directory will be renamed if the name is duplicated.
+}
+
+
+function rename-directory {
+# Rename Directory
+#
+# POST ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/
+#
+# Parameters
+#
+# p (path)
+# operation=rename (post)
+# newname (the new name for directory)
+#
+# Sample request
+#
+curl -w "\n" -d  "operation=rename&newname=pinkfloyd_newfolder" -v  -H 'Authorization: Tokacd9c6ccb8133606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
+#
+# Success
+#
+#   Response code 200 if everything is ok
+#
+# Errors
+#
+# 403 if You do not have permission to rename a folder
+# 400 if newname is not given
+# 520 if Failed to rename directory (generic problem)
+#
+# Notes
+#
+#   If the new name is the same of the old name no operation will be done.
+}
+
+
+function delete-directory {
+# Delete Directory
+#
+# DELETE ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/
+#
+# repo-id
+# p
+#
+# Sample request
+#
+curl -w "\n" -X DELETE -v  -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 200 OK
+#    ...
+#    "success"
+#
+# Success
+#
+#   Response code is 200(OK), and a string `"success"` is returned.
+#
+# Errors
+#
+# 400 Path is missing or invalid(e.g. p=/)
+# 520 Operation failed.
+#
+# Note
+#
+#   This can also be used to delete file.
+}
+
+
+function download-directory {
+# Download Directory
+#
+# GET ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/download/?p=/foo
+#
+# repo-id
+# p
+#
+# Sample request
+#
+curl -w "\n" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
+#
+# Sample response
+#
+#    "${PROTO}://${ADDRESS}:8082/files/adee6094/foo"
+#
+# Errors
+#
+# 400 Path is missing or invalid(e.g. p=/), or unable to download directory, size is too large
+# 404 Repo(path) not found(exist)
+# 520 Operation failed.
+}
+
+
+function share-directory {
+# Share Directory
+#
+# POST ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/share/
+#
+# repo-id
+# emails
+# s_type
+# path
+# perm
+#
+# Sample request
+#
+curl -w "\n" -X POST -d "emails=foo@foo.com&s_type=d&path=/dir&perm=r" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/share/
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 200 OK
+#    ...
+#
+# Success
+#
+#   Response code is 200(OK).
+}

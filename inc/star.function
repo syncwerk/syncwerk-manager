@@ -1,0 +1,114 @@
+#!/bin/bash
+#
+# Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Uncomment to run in verbose mode
+#set -x
+
+function list-starred-files {
+# List starred files
+#
+# GET ${PROTO}://${ADDRESS}/api2/starredfiles/
+#
+#
+# Sample request
+#
+curl -w "\n" -H "Authorization: Token f2210dacd9c6ccb8133606d94ff8e6199b477fd" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/starredfiles/
+#
+# Sample response
+#
+#    [
+#    {
+#        "repo": "99b758e6-91ab-4265-b705-925367374cf0",
+#        "mtime": 1355198150,
+#        "org": -1,
+#        "path": "/foo/bar.doc",
+#        "dir": false,
+#        "size": 0
+#    },
+#    {
+#        "repo": "99b758e6-91ab-4265-b705-925367374cf0",
+#        "mtime": 1353751237,
+#        "org": -1,
+#        "path": "/add_folder-blue.png",
+#        "dir": false,
+#        "size": 3170
+#    }
+#    ]
+}
+
+
+function star-a-file {
+# Star A File
+#
+# POST ${PROTO}://${ADDRESS}/api2/starredfiles/
+#
+# Request parameters
+#
+# repo_id (post)
+# p (post)
+#
+# Sample request
+#
+curl -w "\n" -d "repo_id=dae8cecc-2359-4d33-aa42-01b7846c4b32&p=/foo.md" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/starredfiles/
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 201 CREATED
+#    < Location: ${PROTO}://${ADDRESS}/api2/starredfiles/
+#    ...
+#    "success"
+#
+# Success
+#
+#   Response code is 201(Created) and Location header provides url of starred file list.
+#
+# Errors
+#
+# 400 `repo_id` or `p` is missing, or `p` is not valid file path(e.g. /foo/bar/).
+}
+
+
+function unstar-a-file {
+# Unstar A File
+#
+# DELETE ${PROTO}://${ADDRESS}/api2/starredfiles/
+#
+# Request parameters
+#
+# repo_id
+# p
+#
+# Sample request
+#
+curl -w "\n" -X DELETE -v  -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' '${PROTO}://${ADDRESS}/api2/starredfiles/?repo_id=dae8cecc-2359-4d33-aa42-01b7846c4b32&p=/foo.md'
+#
+# Sample response
+#
+#    ...
+#    < HTTP/1.0 200 OK
+#    ...
+#    "success"
+#
+# Success
+#
+#   Response code is 200(OK), and a string named "success" is returned.
+#
+# Errors
+#
+# 400 `repo_id` or `p` is missing, or `p` is not valid file path(e.g. /foo/bar/).
+}

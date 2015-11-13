@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Uncomment to run in verbose mode
+#set -x
+
+function batch-delete {
+# Batch Delete
+#
+# Pipelining over HTTP/1.1 can be used to delete multiple files and directories without losing performance.
+#
+# A sample request looks like
+curl -w "\n" -X DELETE ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/?p=/foo ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/?p=/bar
+# This code snippet shows how to use Python client to batch delete multiple files and directories. See <http://${ADDRESS}/f/f7fd5d5b9d/>
+#
+}
