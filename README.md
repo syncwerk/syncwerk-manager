@@ -9,12 +9,13 @@ Due to the very early state of the Seafile manager things will very likely break
 
 
 ## Install
-
-Follow the instructions stated below.
+Follow the instructions as stated below.
 
 ### Download
+```
 cd /opt/
 git clone https://github.com/SeafileDE/seafile-manager.git
+```
 
 ### Save Seafile admin credentials
 - Retrieve Seafile admin token as explained at http://manual.seafile.com/develop/web_api.html
@@ -33,8 +34,9 @@ chmod 400 ~/.seafile-manager-credentials
 ```
 
 ### Create symlink
+```
 ln -s /opt/seafile-manager/seafile-manager /usr/local/bin/seafile-manager
-
+```
 
 ## Usage
 These following self-explanatory actions have been added already but not heavily tested:
