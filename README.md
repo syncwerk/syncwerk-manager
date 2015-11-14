@@ -28,6 +28,10 @@ cat ~/.seafile-manager-credentials
 TOKEN=12345678901234567890123456789
 PROTO=https
 ADDRESS=app.seafile.de
+
+DBHOST=localhost
+DBUSER=seafile
+DBPASS=secret
 ```
 
 - Restrict access of ~/.seafile-manager-credentials to the owner

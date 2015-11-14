@@ -80,7 +80,10 @@ case "$1" in
         activate-account ${2}
         ;;
 
-
+backup-database)
+       USAGE="Usage: ${0} backup-database"
+       backup-database ${DBHOST} ${DBUSER} ${DBPASS}
+       ;;
 
 
  *)
