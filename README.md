@@ -47,7 +47,9 @@ ln -s /opt/seafile-manager/seafile-manager /usr/local/bin/seafile-manager
 These following self-explanatory actions have been added already but not heavily tested:
 
 ```
-seafile-manager { get-account-info | check-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | backup-database }
+seafile-manager { check-my-account-info | get-account-info | create-account | update-password \
+| enable-admin | disable-admin | activate-account | deactivate-account | migrate-account |  \
+delete-account | update-note | update-storage | backup-database }
 ```
 
 ## Update

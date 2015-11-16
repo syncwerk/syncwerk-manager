@@ -55,72 +55,107 @@ if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0
 (
 case "$1" in
 
- get-account-info)
-        USAGE="Usage: ${0} get-account-info foo@foo.com"
-        if [ -z ${2+x} ]; then printf "${PRNTF_FAIL_START}Error: Account email is missing.${PRNTF_FAIL_END}${PRNTF_USAGE_START}${USAGE}${PRNTF_USAGE_END}"; exit ; fi
-        echo ${TIMESTAMP}: ${0} get-account-info ${2}
-        get-account-info ${2}
-        ;;
+check-my-account-info)
+    USAGE="Usage: ${0} check-my-account-info"
+    printf "${TIMESTAMP} ${0} check-my-account-info "
+    check-my-account-info
+    ;;
 
- check-account-info)
-        USAGE="Usage: ${0} check-account-info"
-        printf "${TIMESTAMP} ${0} check-account-info "
-        check-account-info
-        ;;
+get-account-info)
+    USAGE="Usage: ${0} get-account-info foo@foo.com"
+    if [[ -z ${2+x} ]]; then printf "${PRNTF_FAIL_START}Error: Account email is missing.${PRNTF_FAIL_END}${PRNTF_USAGE_START}${USAGE}${PRNTF_USAGE_END}"; exit ; fi
+    echo ${TIMESTAMP}: ${0} get-account-info ${2}
+    get-account-info ${2}
+    ;;
 
- create-account)
-        USAGE="Usage: ${0} create-account foo@foo.com secret-password"
-        if [ -z ${2+x} ]; then echo "Account email is missing."; echo "${USAGE}"; exit; fi
-        if [ -z ${3+x} ]; then echo "Password is missing."; echo "${USAGE}"; exit; fi
-        printf "${TIMESTAMP} ${0} create-account ${2} ${3} "
-        create-account ${2} ${3}
-        ;;
+create-account)
+    USAGE="Usage: ${0} create-account foo@foo.com secret-password"
+    if [[ -z ${2+x} ]]; then echo "Account email is missing."; echo "${USAGE}"; exit; fi
+    if [[ -z ${3+x} ]]; then echo "Password is missing."; echo "${USAGE}"; exit; fi
+    printf "${TIMESTAMP} ${0} create-account ${2} ${3} "
+    create-account ${2} ${3}
+    ;;
 
- update-password)
-        USAGE="Usage: ${0} update-password foo@foo.com secret-password"
-        if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
-        if [ -z ${3+x} ]; then echo "Password is missing."; echo "${USAGE}"; exit; fi
-        printf "${TIMESTAMP} ${0} update-password ${2} ${3} "
-        update-password ${2} ${3}
-        ;;
+update-password)
+    USAGE="Usage: ${0} update-password foo@foo.com secret-password"
+    if [[ -z ${2+x} ]]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+    if [[ -z ${3+x} ]]; then echo "Password is missing."; echo "${USAGE}"; exit; fi
+    printf "${TIMESTAMP} ${0} update-password ${2} ${3} "
+    update-password ${2} ${3}
+    ;;
 
- enable-admin)
-        USAGE="Usage: ${0} enable-admin foo@foo.com"
-        if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
-        printf "${TIMESTAMP} ${0} enable-admin ${2} "
-        enable-admin ${2}
-        ;;
+enable-admin)
+    USAGE="Usage: ${0} enable-admin foo@foo.com"
+    if [[ -z ${2+x} ]]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+    printf "${TIMESTAMP} ${0} enable-admin ${2} "
+    enable-admin ${2}
+    ;;
 
- disable-admin)
-        USAGE="Usage: ${0} disable-admin foo@foo.com"
-        if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
-        printf "${TIMESTAMP} ${0} disable-admin ${2} "
-        disable-admin ${2}
-        ;;
+disable-admin)
+    USAGE="Usage: ${0} disable-admin foo@foo.com"
+    if [[ -z ${2+x} ]]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+    printf "${TIMESTAMP} ${0} disable-admin ${2} "
+    disable-admin ${2}
+    ;;
 
- activate-account)
-       USAGE="Usage: ${0} activate-account foo@foo.com"
-       if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
-       printf "${TIMESTAMP} ${0} activate-account ${2} "
-       activate-account ${2}
-       ;;
+activate-account)
+    USAGE="Usage: ${0} activate-account foo@foo.com"
+    if [[ -z ${2+x} ]]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+    printf "${TIMESTAMP} ${0} activate-account ${2} "
+    activate-account ${2}
+    ;;
 
- deactivate-account)
-       USAGE="Usage: ${0} deactivate-account foo@foo.com"
-       if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
-       printf "${TIMESTAMP} ${0} deactivate-account ${2} "
-       deactivate-account ${2}
-       ;;
+deactivate-account)
+    USAGE="Usage: ${0} deactivate-account foo@foo.com"
+    if [[ -z ${2+x} ]]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+    printf "${TIMESTAMP} ${0} deactivate-account ${2} "
+    deactivate-account ${2}
+    ;;
 
- backup-database)
-       printf "${TIMESTAMP} ${0} backup-database "
-       backup-database
-       ;;
+migrate-account)
+    USAGE="Usage: ${0} migrate-account from-existing-user@foo.com to-existing-user@bar.com"
+    if [[ -z ${2+x} ]]; then echo "From account email missing."; echo "${USAGE}"; exit; fi
+    if [[ -z ${3+x} ]]; then echo "To account email missing."; echo "${USAGE}"; exit; fi
+    printf "${TIMESTAMP} ${0} migrate-account ${2} ${3} "
+    migrate-account ${2} ${3}
+    ;;
 
- *)
-        echo "Usage: ${0} { get-account-info | check-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | backup-database }"
-        exit 2
-        ;;
+delete-account)
+    USAGE="Usage: ${0} delete-account foo@foo.com 'YES,_I_Agree_To_Permanently_Delete_This_Account_And_Are_Willing_To_Loose_All_Data_Associated_With_it!'"
+    if [[ -z ${2+x} ]]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+    if [[ ! ${3} = "YES,_I_Agree_To_Permanently_Delete_This_Account_And_Are_Willing_To_Loose_All_Data_Associated_With_it!" ]]; then echo "You need to agree to the permanent deletion by entering to full string shown in the usage."; echo "${USAGE}"; exit; fi
+    printf "${TIMESTAMP} ${0} delete-account ${2} "
+    delete-account ${2}
+    ;;
+
+update-note)
+    USAGE="Usage: ${0} update-note foo@foo.com \'My wonderfull note.\'"
+    if [[ -z ${2+x} ]]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+    if [[ -z ${3+x} ]]; then echo "Note missing."; echo "${USAGE}"; exit; fi
+    printf "${TIMESTAMP} ${0} update-note ${2} ${3} "
+    update-note ${2} "${3}"
+    ;;
+
+update-storage)
+    USAGE="Usage: ${0} update-storage foo@foo.com {Storage in GB. Example: 5 for 5 GB}"
+    if [[ -z ${2+x} ]]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+    if [[ -z ${3+x} ]]; then echo "Storage amount missing."; echo "${USAGE}"; exit; fi
+    if [[ ! ${3} =~ ^[0-9]+$ ]]; then echo "Storage amount must be given as number."; echo "${USAGE}"; exit; fi
+    printf "${TIMESTAMP} ${0} update-storage ${2} ${3} "
+    STORAGE_SPACE="$((${3}*1073741824*1))"
+    update-storage ${2} ${STORAGE_SPACE}
+    ;;
+
+backup-database)
+    printf "${TIMESTAMP} ${0} backup-database "
+    backup-database
+    ;;
+
+*)
+    echo "Usage: ${0} { check-my-account-info | get-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | migrate-account | delete-account | update-note | update-storage | backup-database }"
+    exit 2
+    ;;
+
 esac
 ) 2>&1 | sed 's/  */ /g' | xargs | tee -a ~/$(basename ${0}_${ADDRESS}).log
 chmod 600 ~/$(basename ${0}_${ADDRESS}).log

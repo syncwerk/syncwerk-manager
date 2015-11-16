@@ -48,7 +48,7 @@ curl -sw "\n" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; i
 
 
 # FIXME this one seems rather useless since it only retrievs a limited set of personal infos about the TOKEN holder...
-function check-account-info {
+function check-my-account-info {
 # Check Account Info
 #
 # GET ${PROTO}://${ADDRESS}/api2/account/info/
@@ -215,7 +215,7 @@ function delete-account {
 #
 # Sample request
 #
-curl -sw "\n" -X DELETE -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/newaccount@example.com/
+curl -sw "\n" -X DELETE -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${1}/
 #
 # Sample response
 #
