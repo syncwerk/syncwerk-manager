@@ -1,0 +1,14 @@
+# Admin account token
+TOKEN=12345678901234567890123456789
+PROTO=https
+ADDRESS=app.seafile.de
+
+# Database settings
+DBHOST=localhost
+DBUSER=seafile
+DBPASS=secret
+
+# General vars
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+SEAFILE_HOME_DIR=/opt/seafile
+BACKUP_DIR=${SEAFILE_HOME_DIR}/backup/${TIMESTAMP}

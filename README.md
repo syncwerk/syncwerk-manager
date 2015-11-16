@@ -22,32 +22,20 @@ git clone https://github.com/SeafileDE/seafile-manager.git
 chmod +x seafile-manager/seafile-manager
 ```
 
-### Create ~/.seafile-manager configfile
+### Create ~/.seafile-manager-conf configuration file
+```
+cp seafile-manager/dev/seafile-manager-example-conf ~/.seafile-manager-conf
+```
+
+Restrict access of ~/.seafile-manager-conf to the owner
+```
+chmod 400 ~/.seafile-manager-conf
+```
+
 - Retrieve Seafile admin token as explained at http://manual.seafile.com/develop/web_api.html
-- Save the TOKEN and connection setting to ~/.seafile-manager as shown in the following format:
+- Save the TOKEN and connection setting to ~/.seafile-manager-conf as shown in the following format:
+- Review the settings in ~/.seafile-manager-conf and change to reflect your setup
 
-```
-cat ~/.seafile-manager
-# Admin account token
-TOKEN=12345678901234567890123456789
-PROTO=https
-ADDRESS=app.seafile.de
-
-# Database settings
-DBHOST=localhost
-DBUSER=seafile
-DBPASS=secret
-
-# General vars
-TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
-SEAFILE_HOME_DIR=/opt/seafile
-BACKUP_DIR=${SEAFILE_HOME_DIR}/backup/${TIMESTAMP}
-```
-
-- Restrict access of ~/.seafile-manager to the owner
-```
-chmod 400 ~/.seafile-manager
-```
 
 ### Create symlink
 ```
@@ -58,7 +46,7 @@ ln -s /opt/seafile-manager/seafile-manager /usr/local/bin/seafile-manager
 These following self-explanatory actions have been added already but not heavily tested:
 
 ```
-seafile-manager { get-account-info | check-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | backup-database }
+seafile-manager { get-account-info | check-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | backup-database }
 ```
 
 ## Update

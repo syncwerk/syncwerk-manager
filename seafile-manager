@@ -26,8 +26,8 @@ PRNTF_USAGE_END="\033[0m\n\n"
 
 
 # Import Seafile admin credentials
-PERMS=$(stat ~/.seafile-manager | sed -n '/^Access: (/{s/Access: (\([0-9]\+\).*$/\1/;p}')
-if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0400 on ~/.seafile-manager and try again.; exit; else . ~/.seafile-manager; fi
+PERMS=$(stat ~/.seafile-manager-conf | sed -n '/^Access: (/{s/Access: (\([0-9]\+\).*$/\1/;p}')
+if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0400 on ~/.seafile-manager-conf and try again.; exit; else . ~/.seafile-manager-conf; fi
 
 
 # Load functions
@@ -97,12 +97,18 @@ case "$1" in
        activate-account ${2}
        ;;
 
+ deactivate-account)
+      USAGE="Usage: ${0} deactivate-account foo@foo.com"
+      if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+      deactivate-account ${2}
+      ;;
+
  backup-database)
        backup-seafile
        ;;
 
  *)
-        echo "Usage: ${0} { get-account-info | check-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | backup-database }"
+        echo "Usage: ${0} { get-account-info | check-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | backup-database }"
 
 # This may be used eventually - when all functions are setup
 # Build new list with dev/generate-formated-usage-string helper
