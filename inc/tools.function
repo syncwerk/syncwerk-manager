@@ -19,7 +19,7 @@
 #set -x
 
 
-function backup-seafile {
+function backup-database {
 # Test if SEAFILE_HOME_DIR exist and abort if not
 if [[ -d "${SEAFILE_HOME_DIR}" ]] ;
 then
