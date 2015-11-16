@@ -36,7 +36,7 @@ function add-organization {
 #
 # Sample request
 #
-curl -w "\n" -X POST -d "username=example@example.com&password=example&org_name=example&prefix=example&quota=100&member_limit=10" -H "Authorization: Token ccdff90e4d1efe76b2b3d91c06b027a5cff189d4" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/organization/
+curl -sw "\n" -X POST -d "username=example@example.com&password=example&org_name=example&prefix=example&quota=100&member_limit=10" -H "Authorization: Token ccdff90e4d1efe76b2b3d91c06b027a5cff189d4" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/organization/
 #
 # Sample response
 #

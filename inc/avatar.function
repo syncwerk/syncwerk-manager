@@ -30,7 +30,7 @@ function get-user-avatar {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/avatars/user/foo@foo.com/resized/80/"
+curl -sw "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/avatars/user/foo@foo.com/resized/80/"
 #
 # Sample response
 #
@@ -54,7 +54,7 @@ function get-group-avatar {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/avatars/group/1/resized/80/"
+curl -sw "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/avatars/group/1/resized/80/"
 #
 # Sample response
 #

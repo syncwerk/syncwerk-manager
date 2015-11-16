@@ -25,7 +25,7 @@ function list-group-and-contacts {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groupandcontacts/"
+curl -sw "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groupandcontacts/"
 #
 # Sample response
 #

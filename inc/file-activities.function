@@ -25,7 +25,7 @@ function get-file-activities {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/events/"
+curl -sw "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/events/"
 #
 # Sample response
 #

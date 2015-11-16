@@ -3,6 +3,7 @@ The Seafile manager provides easy management for various Seafile related tasks f
 
 Due to the very early state of the Seafile manager things will very likely break and therefore can harm productive Seafile server installation severely. Data loss is very well possible at this stage. If you care about your data, don't use it on production systems.
 
+All actions are logged to ~/seafile-manager_${SERVER_ADDRESS}).log
 
 ## Requirements
 - curl

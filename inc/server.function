@@ -30,7 +30,7 @@ function get-server-information {
 #
 # Sample request
 #
-curl -w "\n" ${PROTO}://${ADDRESS}/api2/server-info/
+curl -sw "\n" ${PROTO}://${ADDRESS}/api2/server-info/
 #
 # Sample response
 #

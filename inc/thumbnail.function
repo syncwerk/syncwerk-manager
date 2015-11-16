@@ -33,5 +33,5 @@ function get-thumbnail {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token 40f9a510a0629430865dc199a3880898ad2e48fc' ${PROTO}://${ADDRESS}/api2/repos/fbead5d0-4817-4446-92f3-7ac8e6a8e5f5/thumbnail/?p=/5.jpg\&size=123 > thumbnail.png
+curl -sw "\n" -H 'Authorization: Token 40f9a510a0629430865dc199a3880898ad2e48fc' ${PROTO}://${ADDRESS}/api2/repos/fbead5d0-4817-4446-92f3-7ac8e6a8e5f5/thumbnail/?p=/5.jpg\&size=123 > thumbnail.png
 }

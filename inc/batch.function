@@ -24,7 +24,7 @@ function batch-delete {
 # Pipelining over HTTP/1.1 can be used to delete multiple files and directories without losing performance.
 #
 # A sample request looks like
-curl -w "\n" -X DELETE ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/?p=/foo ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/?p=/bar
+curl -sw "\n" -X DELETE ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/?p=/foo ${PROTO}://${ADDRESS}/api2/repos/{repo-id}/dir/?p=/bar
 # This code snippet shows how to use Python client to batch delete multiple files and directories. See <http://${ADDRESS}/f/f7fd5d5b9d/>
 #
 }

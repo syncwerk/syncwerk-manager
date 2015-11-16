@@ -29,7 +29,7 @@ function get-upload-blocks-link {
 #
 # Sample request
 #
-curl -w "\n" -H "Authorization: Token ${TOKEN}" ${PROTO}://${ADDRESS}/api2/repos/99b758e6-91ab-4265-b705-925367374cf0/upload-blks-link/
+curl -sw "\n" -H "Authorization: Token ${TOKEN}" ${PROTO}://${ADDRESS}/api2/repos/99b758e6-91ab-4265-b705-925367374cf0/upload-blks-link/
 #
 # Sample response
 #
@@ -53,7 +53,7 @@ function get-update-blocks-link {
 #
 # Sample request
 #
-curl -w "\n" -H "Authorization: Token ${TOKEN}" ${PROTO}://${ADDRESS}/api2/repos/99b758e6-91ab-4265-b705-925367374cf0/update-blks-link/
+curl -sw "\n" -H "Authorization: Token ${TOKEN}" ${PROTO}://${ADDRESS}/api2/repos/99b758e6-91ab-4265-b705-925367374cf0/update-blks-link/
 #
 # Sample response
 #

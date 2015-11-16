@@ -25,7 +25,7 @@ PRNTF_USAGE_START="\n\e[1;32m"
 PRNTF_USAGE_END="\033[0m\n\n"
 
 
-# Import Seafile admin credentials
+# Load configuration
 PERMS=$(stat ~/.seafile-manager-conf | sed -n '/^Access: (/{s/Access: (\([0-9]\+\).*$/\1/;p}')
 if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0400 on ~/.seafile-manager-conf and try again.; exit; else . ~/.seafile-manager-conf; fi
 
@@ -52,16 +52,19 @@ if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0
 
 
 # Cases
+(
 case "$1" in
 
  get-account-info)
         USAGE="Usage: ${0} get-account-info foo@foo.com"
         if [ -z ${2+x} ]; then printf "${PRNTF_FAIL_START}Error: Account email is missing.${PRNTF_FAIL_END}${PRNTF_USAGE_START}${USAGE}${PRNTF_USAGE_END}"; exit ; fi
+        echo ${TIMESTAMP}: ${0} get-account-info ${2}
         get-account-info ${2}
         ;;
 
  check-account-info)
         USAGE="Usage: ${0} check-account-info"
+        echo ${TIMESTAMP}: ${0} check-account-info
         check-account-info
         ;;
 
@@ -69,6 +72,7 @@ case "$1" in
         USAGE="Usage: ${0} create-account foo@foo.com secret-password"
         if [ -z ${2+x} ]; then echo "Account email is missing."; echo "${USAGE}"; exit; fi
         if [ -z ${3+x} ]; then echo "Password is missing."; echo "${USAGE}"; exit; fi
+        echo ${TIMESTAMP}: ${0} create-account ${2} ${3}
         create-account ${2} ${3}
         ;;
 
@@ -76,34 +80,40 @@ case "$1" in
         USAGE="Usage: ${0} update-password foo@foo.com secret-password"
         if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
         if [ -z ${3+x} ]; then echo "Password is missing."; echo "${USAGE}"; exit; fi
+        echo ${TIMESTAMP}: ${0} update-password ${2} ${3}
         update-password ${2} ${3}
         ;;
 
  enable-admin)
         USAGE="Usage: ${0} enable-admin foo@foo.com"
         if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+        echo ${TIMESTAMP}: ${0} enable-admin ${2}
         enable-admin ${2}
         ;;
 
  disable-admin)
         USAGE="Usage: ${0} disable-admin foo@foo.com"
         if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+        echo ${TIMESTAMP}: ${0} disable-admin ${2}
         disable-admin ${2}
         ;;
 
  activate-account)
        USAGE="Usage: ${0} activate-account foo@foo.com"
        if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+       echo ${TIMESTAMP}: ${0} activate-account ${2}
        activate-account ${2}
        ;;
 
  deactivate-account)
       USAGE="Usage: ${0} deactivate-account foo@foo.com"
       if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+      echo ${TIMESTAMP}: ${0} deactivate-account ${2}
       deactivate-account ${2}
       ;;
 
  backup-database)
+       echo ${TIMESTAMP}: ${0} backup-seafile
        backup-seafile
        ;;
 
@@ -232,3 +242,5 @@ DISABLED
         exit 2
         ;;
 esac
+) 2>&1 | tee -a ~/$(basename ${0}_${ADDRESS}).log
+chmod 600 ~/$(basename ${0}_${ADDRESS}).log

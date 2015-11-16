@@ -31,7 +31,7 @@ function download-file {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' '${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c&reuse=1'
+curl -sw "\n" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' '${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c&reuse=1'
 #
 # Sample response
 #
@@ -55,7 +55,7 @@ function get-file-detail {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/detail/?p=/foo.c
+curl -sw "\n" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/detail/?p=/foo.c
 #
 # Sample response
 #
@@ -86,7 +86,7 @@ function get-file-history {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/history/?p=/foo.c
+curl -sw "\n" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/history/?p=/foo.c
 #
 # Sample response
 #
@@ -150,7 +150,7 @@ function download-file-from-a-revision {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/revision/?p=/foo.c\&commit_id=a1ec20709675f4dc8db825cdbca296be245d189b
+curl -sw "\n" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/revision/?p=/foo.c\&commit_id=a1ec20709675f4dc8db825cdbca296be245d189b
 #
 # Sample response
 #
@@ -176,7 +176,7 @@ function create-file {
 #
 # Sample request
 #
-curl -w "\n" -d "operation=create" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
+curl -sw "\n" -d "operation=create" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
 #
 # Sample response
 #
@@ -210,7 +210,7 @@ function rename-file {
 #
 # Sample request
 #
-curl -w "\n" -d "operation=rename&newname=newfoo.c" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
+curl -sw "\n" -d "operation=rename&newname=newfoo.c" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
 #
 # Sample response
 #
@@ -246,7 +246,7 @@ function lock-file {
 #
 # Sample request
 #
-curl -w "\n" -X PUT -d "operation=lock&p=/foo.c" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/
+curl -sw "\n" -X PUT -d "operation=lock&p=/foo.c" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/
 #
 # Sample response
 #
@@ -281,7 +281,7 @@ function unlock-file {
 #
 # Sample request
 #
-curl -w "\n" -X PUT -d "operation=unlock&p=/foo.c" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/
+curl -sw "\n" -X PUT -d "operation=unlock&p=/foo.c" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/
 #
 # Sample response
 #
@@ -318,7 +318,7 @@ function move-file {
 #
 # Sample request
 #
-curl -w "\n" -d "operation=move&dst_repo=affc837f-7fdd-4e91-b88a-32caf99897f2&dst_dir=/" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
+curl -sw "\n" -d "operation=move&dst_repo=affc837f-7fdd-4e91-b88a-32caf99897f2&dst_dir=/" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
 #
 # Sample response
 #
@@ -354,7 +354,7 @@ function copy-file {
 #
 # Sample request
 #
-curl -w "\n" -d "dst_repo=73ddb2b8-dda8-471b-b7a7-ca742b07483c&dst_dir=/&file_names=foo.c" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/repos/c7436518-5f46-4296-97db-2fcba4c8c8db/fileops/copy/"
+curl -sw "\n" -d "dst_repo=73ddb2b8-dda8-471b-b7a7-ca742b07483c&dst_dir=/&file_names=foo.c" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/repos/c7436518-5f46-4296-97db-2fcba4c8c8db/fileops/copy/"
 #
 # Sample response
 #
@@ -382,7 +382,7 @@ function revert-file {
 #
 # Sample request
 #
-curl -w "\n" -X PUT -d "commit_id=a1ec20709675f4dc8db825cdbca296be245d189b&p=/foo.c" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/8f5f2222-72a8-454f-ac40-8397c5a556a8/file/revert/
+curl -sw "\n" -X PUT -d "commit_id=a1ec20709675f4dc8db825cdbca296be245d189b&p=/foo.c" -H "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/8f5f2222-72a8-454f-ac40-8397c5a556a8/file/revert/
 #
 # Sample response
 #
@@ -414,7 +414,7 @@ function delete-file {
 #
 # Sample request
 #
-curl -w "\n" -X DELETE -v  -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
+curl -sw "\n" -X DELETE -v  -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/file/?p=/foo.c
 #
 # Sample response
 #

@@ -31,7 +31,7 @@ function list-directory-entries {
 #
 # Sample request
 #
-curl -w "\n" -H "Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/99b758e6-91ab-4265-b705-925367374cf0/dir/?p=/foo
+curl -sw "\n" -H "Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/99b758e6-91ab-4265-b705-925367374cf0/dir/?p=/foo
 #
 # Sample response
 #
@@ -70,7 +70,7 @@ function create-new-directory {
 #
 # Sample request
 #
-curl -w "\n" -d  "operation=mkdir" -v  -H 'Authorization: Tokacd9c6ccb8133606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
+curl -sw "\n" -d  "operation=mkdir" -v  -H 'Authorization: Tokacd9c6ccb8133606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
 #
 # Sample response
 #
@@ -109,7 +109,7 @@ function rename-directory {
 #
 # Sample request
 #
-curl -w "\n" -d  "operation=rename&newname=pinkfloyd_newfolder" -v  -H 'Authorization: Tokacd9c6ccb8133606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
+curl -sw "\n" -d  "operation=rename&newname=pinkfloyd_newfolder" -v  -H 'Authorization: Tokacd9c6ccb8133606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
 #
 # Success
 #
@@ -137,7 +137,7 @@ function delete-directory {
 #
 # Sample request
 #
-curl -w "\n" -X DELETE -v  -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
+curl -sw "\n" -X DELETE -v  -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
 #
 # Sample response
 #
@@ -171,7 +171,7 @@ function download-directory {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
+curl -sw "\n" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/?p=/foo
 #
 # Sample response
 #
@@ -198,7 +198,7 @@ function share-directory {
 #
 # Sample request
 #
-curl -w "\n" -X POST -d "emails=foo@foo.com&s_type=d&path=/dir&perm=r" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/share/
+curl -sw "\n" -X POST -d "emails=foo@foo.com&s_type=d&path=/dir&perm=r" -H 'Authorization: Token f2210dacd3606d94ff8e61d99b477fd' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/share/
 #
 # Sample response
 #

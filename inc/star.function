@@ -26,7 +26,7 @@ function list-starred-files {
 #
 # Sample request
 #
-curl -w "\n" -H "Authorization: Token f2210dacd9c6ccb8133606d94ff8e6199b477fd" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/starredfiles/
+curl -sw "\n" -H "Authorization: Token f2210dacd9c6ccb8133606d94ff8e6199b477fd" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/starredfiles/
 #
 # Sample response
 #
@@ -63,7 +63,7 @@ function star-a-file {
 #
 # Sample request
 #
-curl -w "\n" -d "repo_id=dae8cecc-2359-4d33-aa42-01b7846c4b32&p=/foo.md" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/starredfiles/
+curl -sw "\n" -d "repo_id=dae8cecc-2359-4d33-aa42-01b7846c4b32&p=/foo.md" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' ${PROTO}://${ADDRESS}/api2/starredfiles/
 #
 # Sample response
 #
@@ -95,7 +95,7 @@ function unstar-a-file {
 #
 # Sample request
 #
-curl -w "\n" -X DELETE -v  -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' '${PROTO}://${ADDRESS}/api2/starredfiles/?repo_id=dae8cecc-2359-4d33-aa42-01b7846c4b32&p=/foo.md'
+curl -sw "\n" -X DELETE -v  -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; charset=utf-8; indent=4' '${PROTO}://${ADDRESS}/api2/starredfiles/?repo_id=dae8cecc-2359-4d33-aa42-01b7846c4b32&p=/foo.md'
 #
 # Sample response
 #

@@ -25,7 +25,7 @@ function get-default-library {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/default-repo/"
+curl -sw "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/default-repo/"
 #
 # Sample response
 #
@@ -43,7 +43,7 @@ function create-default-library {
 #
 # Sample request
 #
-curl -w "\n" -X POST -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/default-repo/"
+curl -sw "\n" -X POST -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/default-repo/"
 #
 # Sample response
 #
@@ -61,7 +61,7 @@ function list-libraries {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/
+curl -sw "\n" -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/
 #
 # Sample response
 #
@@ -107,7 +107,7 @@ function get-library-info {
 #
 # Sample request
 #
-curl -w "\n" -G -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/632ab8a8-ecf9-4435-93bf-f495d5bfe975/
+curl -sw "\n" -G -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/632ab8a8-ecf9-4435-93bf-f495d5bfe975/
 #
 # Sample response
 #
@@ -137,7 +137,7 @@ function get-library-owner {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/owner/
+curl -sw "\n" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/owner/
 #
 # Sample response
 #
@@ -162,7 +162,7 @@ function get-library-history {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/history/
+curl -sw "\n" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/history/
 #
 # Sample response
 #
@@ -183,7 +183,7 @@ function create-library {
 #
 # Sample request
 #
-curl -w "\n" -d "name=foo&desc=new library" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/
+curl -sw "\n" -d "name=foo&desc=new library" -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/
 #
 # Sample response
 #
@@ -228,7 +228,7 @@ function check-create-sub-library {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/sub_repo/?p=/\&name=sub_lib
+curl -sw "\n" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/dir/sub_repo/?p=/\&name=sub_lib
 #
 # Sample response
 #
@@ -248,7 +248,7 @@ function delete-library {
 #
 # Sample request
 #
-curl -w "\n" -X DELETE -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/8f5f2222-72a8-454f-ac40-8397c5a556a8/
+curl -sw "\n" -X DELETE -H 'Authorization: Token ${TOKEN}' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/8f5f2222-72a8-454f-ac40-8397c5a556a8/
 #
 # Sample response
 #
@@ -273,7 +273,7 @@ function decrypt-library {
 #
 # Sample request
 #
-curl -w "\n" -d "password=123" -H 'Authorization: Token e6a33d61954f219a96b60f635cf02717964e4385' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/0c2465a5-4753-4660-8a22-65abec9ec8d0/
+curl -sw "\n" -d "password=123" -H 'Authorization: Token e6a33d61954f219a96b60f635cf02717964e4385' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/0c2465a5-4753-4660-8a22-65abec9ec8d0/
 #
 # Sample response
 #
@@ -298,7 +298,7 @@ function create-public-library {
 #
 # Sample request
 #
-curl -w "\n" -X POST -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/public/
+curl -sw "\n" -X POST -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/public/
 #
 # Sample response
 #
@@ -329,7 +329,7 @@ function remove-public-library {
 #
 # Sample request
 #
-curl -w "\n" -X DELETE -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/public/
+curl -sw "\n" -X DELETE -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/public/
 #
 # Sample response
 #
@@ -360,7 +360,7 @@ function fetch-library-download-info {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/download-info/
+curl -sw "\n" -H 'Authorization: Token f2210dacd9c6ccb8133606d94ff8e61d9b477fd' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/repos/dae8cecc-2359-4d33-aa42-01b7846c4b32/download-info/
 #
 # Sample response
 #
@@ -385,14 +385,14 @@ function list-virtual-libraries {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/virtual-repos/"
+curl -sw "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/virtual-repos/"
 #
 # Sample response
 #
 #    {"virtual-repos":
 #        [
 #            {"virtual_perm": "rw", "store_id": null, "worktree_invalid": false, "encrypted": false, "origin_repo_name": "lian", "last_modify": 0, "no_local_history": false, "head_branch": null, "last_sync_time": 0, "id": "51344de8-456f-4dc7-ac08-718827994252", "size": 0, "share_permission": null, "worktree_changed": false, "worktree_checktime": 0, "origin_path": "/lian", "is_virtual": true, "origin_repo_id": "a582d3bc-bcf5-421e-9125-741fa56d18d4", "version": 1, "random_key": null, "is_original_owner": true, "shared_email": null, "enc_version": 0, "head_cmmt_id": "bc666fdc60d2352b9f6a0324ac64168d43724eed", "desc": null,
-curl -w "\n"index_corrupted": false, "magic": null, "name": "lian", "worktree": null, "auto_sync": false, "relay_id": null},
+curl -sw "\n"index_corrupted": false, "magic": null, "name": "lian", "worktree": null, "auto_sync": false, "relay_id": null},
 #            {"virtual_perm": "rw", "store_id": null, "worktree_invalid": false, "encrypted": false, "origin_repo_name": "lian", "last_modify": 0, "no_local_history": false, "head_branch": null, "last_sync_time": 0, "id": "c0a3283c-013c-4a7c-8f68-006f06fa6dec", "size": 0, "share_permission": null, "worktree_changed": false, "worktree_checktime": 0, "origin_path": "/", "is_virtual": true, "origin_repo_id": "a582d3bc-bcf5-421e-9125-741fa56d18d4", "version": 1, "random_key": null, "is_original_owner": true, "shared_email": null, "enc_version": 0, "head_cmmt_id": "ff18229aadc9acc73ad481278d5b4c42b3353aa0", "desc": null, "index_corrupted": false, "magic": null, "name": "123", "worktree": null, "auto_sync": false, "relay_id": null}
 #        ]
 #    }
@@ -411,7 +411,7 @@ function search-libraries {
 #
 # Sample request
 #
-curl -w "\n" -G -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/search/?q=keyword
+curl -sw "\n" -G -H 'Authorization: Token 24fd3c026886e3121b2ca630805ed425c272cb96' -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/search/?q=keyword
 #
 # Sample response
 #

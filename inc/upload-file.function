@@ -29,7 +29,7 @@ function get-upload-link {
 #
 # Sample request
 #
-curl -w "\n" -H "Authorization: Token ${TOKEN}" ${PROTO}://${ADDRESS}/api2/repos/99b758e6-91ab-4265-b705-925367374cf0/upload-link/
+curl -sw "\n" -H "Authorization: Token ${TOKEN}" ${PROTO}://${ADDRESS}/api2/repos/99b758e6-91ab-4265-b705-925367374cf0/upload-link/
 #
 # Sample response
 #
@@ -57,7 +57,7 @@ function upload-file {
 #
 # Sample request
 #
-curl -w "\n" -H "Authorization: Token ${TOKEN}" -F file=@test.txt -F filename=test.txt -F parent_dir=/ http://${ADDRESS}:8082/upload-api/ef881b22
+curl -sw "\n" -H "Authorization: Token ${TOKEN}" -F file=@test.txt -F filename=test.txt -F parent_dir=/ http://${ADDRESS}:8082/upload-api/ef881b22
 #
 # Sample response
 #
@@ -82,7 +82,7 @@ function update-file {
 #
 # Sample request
 #
-curl -w "\n" -H "Authorization: Token ${TOKEN}" ${PROTO}://${ADDRESS}/api2/repos/99b758e6-91ab-4265-b705-925367374cf0/update-link/
+curl -sw "\n" -H "Authorization: Token ${TOKEN}" ${PROTO}://${ADDRESS}/api2/repos/99b758e6-91ab-4265-b705-925367374cf0/update-link/
 #
 # Sample response
 #
@@ -107,7 +107,7 @@ function fixme-upload-file {
 #
 # Sample request
 #
-curl -w "\n" -H "Authorization: Token ${TOKEN}" -F file=@test.txt -F filename=test.txt -F target_file=/test.txt ${PROTO}://${ADDRESS}/upload-api/ef881b22
+curl -sw "\n" -H "Authorization: Token ${TOKEN}" -F file=@test.txt -F filename=test.txt -F target_file=/test.txt ${PROTO}://${ADDRESS}/upload-api/ef881b22
 #
 # Returns
 #

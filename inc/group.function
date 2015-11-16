@@ -26,7 +26,7 @@ function list-groups {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groups/"
+curl -sw "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groups/"
 #
 # Sample response
 #
@@ -65,7 +65,7 @@ function add-a-group {
 #
 # Sample request
 #
-curl -w "\n" -X PUT -d "group_name=newgroup" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groups/"
+curl -sw "\n" -X PUT -d "group_name=newgroup" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groups/"
 #
 # Sample response
 #
@@ -88,7 +88,7 @@ function delete-group {
 #
 # Sample request
 #
-curl -w "\n" -X DELETE -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groups/1/"
+curl -sw "\n" -X DELETE -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groups/1/"
 #
 # Success
 #
@@ -115,7 +115,7 @@ function rename-group {
 #
 # Sample request
 #
-curl -w "\n" -d "operation=rename&newname=pinkfloyd_lovers" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groups/1/"
+curl -sw "\n" -d "operation=rename&newname=pinkfloyd_lovers" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groups/1/"
 #
 # Success
 #
@@ -144,7 +144,7 @@ function group-member {
 #
 # Sample request
 #
-curl -w "\n" -X PUT -d "user_name=foo@foo.com"-H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groups/1/members/"
+curl -sw "\n" -X PUT -d "user_name=foo@foo.com"-H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groups/1/members/"
 #
 # Sample response
 #
@@ -169,7 +169,7 @@ function delete-a-group-member {
 #
 # Sample request
 #
-curl -w "\n" -X DELETE -d "user_name=foo@foo.com" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groups/1/members/"
+curl -sw "\n" -X DELETE -d "user_name=foo@foo.com" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/groups/1/members/"
 #
 # Sample response
 #
@@ -198,7 +198,7 @@ function get-group-messages {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/group/msgs/1/"
+curl -sw "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/group/msgs/1/"
 #
 # Sample response
 #
@@ -231,7 +231,7 @@ function get-group-message-detail {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/group/1/msg/1/"
+curl -sw "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/group/1/msg/1/"
 #
 # Sample response
 #
@@ -280,7 +280,7 @@ function send-a-group-message {
 #
 # Sample request
 #
-curl -w "\n" -d "message=this is another test&repo_id=c7436518-5f46-4296-97db-2fcba4c8c8db&path=/123.md" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/group/msgs/1/"
+curl -sw "\n" -d "message=this is another test&repo_id=c7436518-5f46-4296-97db-2fcba4c8c8db&path=/123.md" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/group/msgs/1/"
 #
 # Sample response
 #
@@ -303,7 +303,7 @@ function reply-a-group-message {
 #
 # Sample request
 #
-curl -w "\n" -d "message=this is a reply" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/group/1/msg/1/"
+curl -sw "\n" -d "message=this is a reply" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/group/1/msg/1/"
 #
 # Sample response
 #
@@ -325,7 +325,7 @@ function get-group-message-replies {
 #
 # Sample request
 #
-curl -w "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/new_replies/"
+curl -sw "\n" -H 'Authorization: Token ${TOKEN}' "${PROTO}://${ADDRESS}/api2/new_replies/"
 #
 # Sample response
 #
