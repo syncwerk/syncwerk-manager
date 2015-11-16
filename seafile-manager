@@ -26,12 +26,29 @@ PRNTF_USAGE_END="\033[0m\n\n"
 
 
 # Import Seafile admin credentials
-PERMS=$(stat ~/.seafile-manager-credentials | sed -n '/^Access: (/{s/Access: (\([0-9]\+\).*$/\1/;p}')
-if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0400 on ~/.seafile-manager-credentials and try again.; exit; else . ~/.seafile-manager-credentials; fi
+PERMS=$(stat ~/.seafile-manager | sed -n '/^Access: (/{s/Access: (\([0-9]\+\).*$/\1/;p}')
+if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0400 on ~/.seafile-manager and try again.; exit; else . ~/.seafile-manager; fi
 
 
 # Load functions
-. /opt/seafile-manager/inc/*.function
+. /opt/seafile-manager/inc/account.function
+#. /opt/seafile-manager/inc/avatar.function
+#. /opt/seafile-manager/inc/batch.function
+#. /opt/seafile-manager/inc/blocks.function
+#. /opt/seafile-manager/inc/directory.function
+#. /opt/seafile-manager/inc/file-activities.function
+#. /opt/seafile-manager/inc/file.function
+#. /opt/seafile-manager/inc/group-and-contacts.function
+#. /opt/seafile-manager/inc/group.function
+#. /opt/seafile-manager/inc/library.function
+#. /opt/seafile-manager/inc/organizations.function
+#. /opt/seafile-manager/inc/server.function
+#. /opt/seafile-manager/inc/shared-library.function
+#. /opt/seafile-manager/inc/shared-link.function
+#. /opt/seafile-manager/inc/star.function
+#. /opt/seafile-manager/inc/thumbnail.function
+. /opt/seafile-manager/inc/tools.function
+#. /opt/seafile-manager/inc/upload-file.function
 
 
 # Cases
@@ -75,19 +92,17 @@ case "$1" in
         ;;
 
  activate-account)
-        USAGE="Usage: ${0} activate-account foo@foo.com"
-        if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
-        activate-account ${2}
-        ;;
-
-backup-database)
-       USAGE="Usage: ${0} backup-database"
-       backup-database ${DBHOST} ${DBUSER} ${DBPASS}
+       USAGE="Usage: ${0} activate-account foo@foo.com"
+       if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
+       activate-account ${2}
        ;;
 
+ backup-database)
+       backup-seafile
+       ;;
 
  *)
-        echo "Usage: ${0} {get-account-info|check-account-info|create-account}"
+        echo "Usage: ${0} {get-account-info|check-account-info|create-account|update-password|enable-admin|disable-admin|activate-account|backup-database}"
 
 # This may be used eventually - when all functions are setup
 # Build new list with dev/generate-formated-usage-string helper

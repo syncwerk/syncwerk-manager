@@ -19,6 +19,25 @@
 #set -x
 
 
-function backup-database {
-for i in ccnet-db seafile-db seahub-db; do mysqldump -h ${1} -u ${2} -p ${3} ${i} > $(date +"%Y-%m-%d_%H-%M-%S")_${i}.sql; done
+function backup-seafile {
+# Test if SEAFILEDIR exist and abort if not
+if [[ -d "${SEAFILE_HOME_DIR}" ]] ;
+then
+  mkdir -p ${BACKUP_DIR}
+  for i in ccnet-db seafile-db seahub-db; do mysqldump -h ${1} -u ${2} -p ${3} ${i} > ${BACKUP_DIR}/${i}.sql; done
+else
+cat <<EOF
+
+  The configured local Seafile home directory ${SEAFILE_HOME_DIR}
+  does not exist or simply is wrong for your installation.
+
+  Set the correct path of variable \${SEAFILE_HOME_DIR} in
+  ~/.seafile-manager-credentials and try again.
+
+  Don't use this feature if you are running your Seafile server
+  on a remote machine.
+
+EOF
+exit 1
+fi
 }

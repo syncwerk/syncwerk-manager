@@ -8,6 +8,7 @@ Due to the very early state of the Seafile manager things will very likely break
 - curl
 - openssl
 - git
+- mariadb-client
 
 
 ## Install
@@ -23,22 +24,29 @@ chmod +x seafile-manager/seafile-manager
 
 ### Save Seafile admin credentials
 - Retrieve Seafile admin token as explained at http://manual.seafile.com/develop/web_api.html
-- Save the admin credentials to ~/.seafile-manager-credentials as shown in the following format:
+- Save the admin credentials to ~/.seafile-manager as shown in the following format:
 
 ```
-cat ~/.seafile-manager-credentials
+cat ~/.seafile-manager
+# Admin account token
 TOKEN=12345678901234567890123456789
 PROTO=https
 ADDRESS=app.seafile.de
 
+# Database settings
 DBHOST=localhost
 DBUSER=seafile
 DBPASS=secret
+
+# General vars
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+SEAFILE_HOME_DIR=/opt/seafile
+BACKUP_DIR=${SEAFILE_HOME_DIR}/backup/${TIMESTAMP}
 ```
 
-- Restrict access of ~/.seafile-manager-credentials to the owner
+- Restrict access of ~/.seafile-manager to the owner
 ```
-chmod 400 ~/.seafile-manager-credentials
+chmod 400 ~/.seafile-manager
 ```
 
 ### Create symlink
