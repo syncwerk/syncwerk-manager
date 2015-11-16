@@ -87,7 +87,7 @@ case "$1" in
  enable-admin)
         USAGE="Usage: ${0} enable-admin foo@foo.com"
         if [ -z ${2+x} ]; then echo "Account email missing."; echo "${USAGE}"; exit; fi
-        printf "${TIMESTAMP} ${0} enable-admin ${2 "
+        printf "${TIMESTAMP} ${0} enable-admin ${2} "
         enable-admin ${2}
         ;;
 
@@ -122,5 +122,5 @@ case "$1" in
         exit 2
         ;;
 esac
-) 2>&1 | sed 's/  */ /g;s/{\{|\}}//g' | xargs | tee -a ~/$(basename ${0}_${ADDRESS}).log
+) 2>&1 | sed 's/  */ /g' | xargs | tee -a ~/$(basename ${0}_${ADDRESS}).log
 chmod 600 ~/$(basename ${0}_${ADDRESS}).log
