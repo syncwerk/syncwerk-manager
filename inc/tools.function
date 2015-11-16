@@ -20,7 +20,7 @@
 
 
 function backup-seafile {
-# Test if SEAFILEDIR exist and abort if not
+# Test if SEAFILE_HOME_DIR exist and abort if not
 if [[ -d "${SEAFILE_HOME_DIR}" ]] ;
 then
   mkdir -p ${BACKUP_DIR}

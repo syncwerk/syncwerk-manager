@@ -102,7 +102,7 @@ case "$1" in
        ;;
 
  *)
-        echo "Usage: ${0} {get-account-info|check-account-info|create-account|update-password|enable-admin|disable-admin|activate-account|backup-database}"
+        echo "Usage: ${0} { get-account-info | check-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | backup-database }"
 
 # This may be used eventually - when all functions are setup
 # Build new list with dev/generate-formated-usage-string helper

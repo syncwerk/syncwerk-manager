@@ -22,9 +22,9 @@ git clone https://github.com/SeafileDE/seafile-manager.git
 chmod +x seafile-manager/seafile-manager
 ```
 
-### Save Seafile admin credentials
+### Create ~/.seafile-manager configfile
 - Retrieve Seafile admin token as explained at http://manual.seafile.com/develop/web_api.html
-- Save the admin credentials to ~/.seafile-manager as shown in the following format:
+- Save the TOKEN and connection setting to ~/.seafile-manager as shown in the following format:
 
 ```
 cat ~/.seafile-manager
@@ -58,7 +58,7 @@ ln -s /opt/seafile-manager/seafile-manager /usr/local/bin/seafile-manager
 These following self-explanatory actions have been added already but not heavily tested:
 
 ```
-seafile-manager {get-account-info | check-account-info | create-account | update-password | enable-admin | disable-admin | activate-account}
+seafile-manager { get-account-info | check-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | backup-database }
 ```
 
 ## Update
