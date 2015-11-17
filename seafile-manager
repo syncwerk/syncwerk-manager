@@ -151,8 +151,41 @@ backup-database)
     backup-database
     ;;
 
+check-library-integrity)
+    USAGE="Usage: ${0} check-library-integrity library-id"
+    printf "${TIMESTAMP} ${0} check-library-integrity ${2} "
+    if [[ -z ${2+x} ]]; then echo "Library ID missing."; echo "${USAGE}"; exit; fi
+    check-library-integrity
+    ;;
+
+repair-library-integrity)
+    USAGE="Usage: ${0} repair-library-integrity library-id"
+    printf "${TIMESTAMP} ${0} repair-library-integrity ${2} "
+    if [[ -z ${2+x} ]]; then echo "Library ID missing."; echo "${USAGE}"; exit; fi
+    repair-library-integrity
+    ;;
+
+enable-library-sync-after-repair)
+    USAGE="Usage: ${0} enable-library-sync-after-repair library-id"
+    printf "${TIMESTAMP} ${0} enable-library-sync-after-repair ${2} "
+    if [[ -z ${2+x} ]]; then echo "Library ID missing."; echo "${USAGE}"; exit; fi
+    enable-library-sync-after-repair ${2}
+    ;;
+
+export-library-to-filesystem)
+    USAGE="Usage: ${0} export-library-to-filesystem library-id restore-path "
+    # FIXME Add check if given value is a directory which pre-exists or needs to be created manually.
+    # If it pre-exists and contains content, we probably should abort the export since it might overwrite
+    # the existing content. Not sure if the export creates the folder automatically or if we need to
+    # create it prior to the export of unencrypted libraries.
+    printf "${TIMESTAMP} ${0} export-library-to-filesystem ${2} ${3}"
+    if [[ -z ${2+x} ]]; then echo "Library ID missing."; echo "${USAGE}"; exit; fi
+    if [[ -z ${3+x} ]]; then echo "Restore location missing."; echo "${USAGE}"; exit; fi
+    export-library-to-filesystem ${2} ${3}
+    ;;
+
 *)
-    echo "Usage: ${0} { check-my-account-info | get-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | migrate-account | delete-account | update-note | update-storage | backup-database }"
+    echo "Usage: ${0} { check-my-account-info | get-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | migrate-account | delete-account | update-note | update-storage | backup-database | check-library-integrity | repair-library-integrity | enable-library-sync-after-repair | export-library-to-filesystem }"
     exit 2
     ;;
 

@@ -34,7 +34,100 @@ cat <<EOF
   Set the correct path of variable \${SEAFILE_HOME_DIR} in
   ~/.seafile-manager-credentials and try again.
 
-  Don't use this feature if you are running your Seafile server
+  Don\'t use this feature if you are running your Seafile server
+  on a remote machine.
+
+EOF
+exit 1
+fi
+}
+
+
+function check-library-integrity {
+# Test if ${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh exist and abort if not
+if [[ -f "${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh" ]] ;
+then
+  ${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh
+else
+cat <<EOF
+
+  The file ${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh
+  does not exist or simply is wrong for your installation.
+
+  Set the correct path of variable \${SEAFILE_HOME_DIR} in
+  ~/.seafile-manager-credentials and try again.
+
+  Don\'t use this feature if you are running your Seafile server
+  on a remote machine.
+
+EOF
+exit 1
+fi
+}
+
+
+function repair-library-integrity {
+# Test if ${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh exist and abort if not
+if [[ -f "${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh" ]] ;
+then
+  ${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh --repair
+else
+cat <<EOF
+
+  The file ${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh
+  does not exist or simply is wrong for your installation.
+
+  Set the correct path of variable \${SEAFILE_HOME_DIR} in
+  ~/.seafile-manager-credentials and try again.
+
+  Don\'t use this feature if you are running your Seafile server
+  on a remote machine.
+
+EOF
+exit 1
+fi
+}
+
+
+function enable-library-sync-after-repair {
+# Test if ${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh exist and abort if not
+if [[ -f "${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh" ]] ;
+then
+  ${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh --enable-sync ${1}
+else
+cat <<EOF
+
+  The file ${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh
+  does not exist or simply is wrong for your installation.
+
+  Set the correct path of variable \${SEAFILE_HOME_DIR} in
+  ~/.seafile-manager-credentials and try again.
+
+  Don\'t use this feature if you are running your Seafile server
+  on a remote machine.
+
+EOF
+exit 1
+fi
+}
+
+
+function export-library-to-filesystem {
+# Test if ${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh exist and abort if not
+if [[ -f "${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh" ]] ;
+then
+  echo " Export of encrypted libraries is not supported. They will be skipped ..."
+  ${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh --export ${2} ${1}
+else
+cat <<EOF
+
+  The file ${SEAFILE_HOME_DIR}/seafile-server-latest/seaf-fsck.sh
+  does not exist or simply is wrong for your installation.
+
+  Set the correct path of variable \${SEAFILE_HOME_DIR} in
+  ~/.seafile-manager-credentials and try again.
+
+  Don\'t use this feature if you are running your Seafile server
   on a remote machine.
 
 EOF
