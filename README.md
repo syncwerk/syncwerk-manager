@@ -1,5 +1,5 @@
 # Seafile Manager (Alpha Version)
-The Seafile manager provides easy management for various Seafile related tasks from the Linux command line. It makes heavy usage of the Seafile WebAPI.
+The Seafile manager provides easy installation of the Seafile server and management for various Seafile related tasks from the Linux command line. It makes heavy usage of the Seafile WebAPI.
 
 Due to the very early state of the Seafile manager things will very likely break and therefore can harm productive Seafile server installation severely. Data loss is very well possible at this stage. If you care about your data, don't use it on production systems.
 
@@ -52,7 +52,8 @@ These following self-explanatory actions have been added already but not heavily
 seafile-manager { check-my-account-info | get-account-info | create-account | update-password \
 | enable-admin | disable-admin | activate-account | deactivate-account | migrate-account \
 | delete-account | update-note | update-storage | backup-database | check-library-integrity \
-| repair-library-integrity | enable-library-sync-after-repair | export-library-to-filesystem }
+| repair-library-integrity | enable-library-sync-after-repair | export-library-to-filesystem \
+| install-seafile-professional-on-debian }
 ```
 
 
@@ -73,6 +74,10 @@ git pull https://github.com/SeafileDE/seafile-manager.git
 - Add info on how to retrieve the admin token to README.md
 - Add more actions
 - Search for FIXME's and fix ;-)
+- Add expert installation mode for Seafile server
+- Add Seafile server installation for other operating systems, besides Debian
+- Add Seafile CE installation
+- Refine logging abilities 
 
 
 ## License

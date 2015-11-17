@@ -1,0 +1,122 @@
+#!/bin/bash
+#
+# seafile-server-installer/unified/seafile_debian
+#
+# Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Uncomment to run in verbose mode
+#set -x
+
+
+function print-system-infos {
+# Log system infos
+echo Timestamp
+echo -----------------------------------------------------------------
+date
+echo
+echo
+echo Hostnames
+echo -----------------------------------------------------------------
+echo "$(hostname -f),$(hostname -s),$(hostname -d),$(hostname -i)"
+echo
+echo
+echo Content of /etc/hosts
+echo -----------------------------------------------------------------
+cat /etc/hosts
+echo
+echo
+echo OS
+echo -----------------------------------------------------------------
+lsb_release -a
+echo
+echo
+echo OS Architecture
+echo -----------------------------------------------------------------
+echo ${ARCH}
+echo
+echo
+echo Debian Package Architecture
+echo -----------------------------------------------------------------
+echo ${DEB_ARCH}
+echo
+echo
+echo CPU info
+echo -----------------------------------------------------------------
+echo cat /proc/cpuinfo
+echo
+echo
+echo Memory info
+echo -----------------------------------------------------------------
+echo cat /proc/meminfo
+echo
+echo
+echo Active Kernel
+echo -----------------------------------------------------------------
+uname -a
+echo
+echo
+echo Network Interfaces
+echo -----------------------------------------------------------------
+ifconfig -a
+echo
+echo
+echo IP Addresses
+echo -----------------------------------------------------------------
+ip addr show
+echo
+echo
+echo DNS Servers
+echo -----------------------------------------------------------------
+cat /etc/resolv.conf
+echo
+echo
+echo Routes
+echo -----------------------------------------------------------------
+route -n
+echo
+echo
+echo Content of /etc/network/interfaces
+echo -----------------------------------------------------------------
+cat /etc/network/interfaces
+echo
+echo
+echo Debian Version
+echo -----------------------------------------------------------------
+cat /etc/debian_version
+echo
+echo
+find /etc/apt/ -type f | grep -v gpg | while read line ; do echo ; \
+    echo Content of $line ; \
+    echo ----------------------------------------------------------------- ; \
+    cat $line ; \
+    echo ;
+done
+echo
+echo
+echo Installed packages
+echo -----------------------------------------------------------------
+dpkg -l
+echo
+echo
+echo Process List
+echo -----------------------------------------------------------------
+ps axu
+echo
+echo
+echo Local user accounts
+echo -----------------------------------------------------------------
+cat /etc/passwd
+}

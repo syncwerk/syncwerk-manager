@@ -8,7 +8,66 @@ DBHOST=localhost
 DBUSER=seafile
 DBPASS=secret
 
-# General vars
+
+# General
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
-SEAFILE_HOME_DIR=/opt/seafile
-BACKUP_DIR=${SEAFILE_HOME_DIR}/backup/${TIMESTAMP}
+
+
+# Hostname
+SERVER_NAME=$(hostname -s | cut -c -16)
+while test "${#SERVER_NAME}" -lt 2; do SERVER_NAME="${SERVER_NAME}_"; done
+HOSTNAME=$(hostname -f)
+
+
+# Seafile Server
+SEAFILE_SERVER_HOME=/opt/seafile
+BACKUP_DIR=${SEAFILE_SERVER_HOME}/backup/${TIMESTAMP}
+SEAFILE_SERVER_ADMIN=admin@${HOSTNAME}
+SEAFILE_SERVER_USER=seafile
+SEAFILE_SERVER_FILESERVER_PORT=8082
+SEAFILE_SERVER_TIME_ZONE="Europe/Berlin"
+
+
+# DPKG non-interactive mode
+export DEBIAN_FRONTEND=noninteractive
+
+
+# Check for package dependencies and install if missing
+if [[ ! -f $(which lsb_release) ]]; then
+    echo lsb-release missing. Hit any key to install or CTRL-C to abort..
+    read ; apt-get update ; apt-get install lsb-release -y
+fi
+
+if [[ ! -f $(which curl) ]]; then
+    echo Curl missing. Hit any key to install or CTRL-C to abort..
+    read ; apt-get update ; apt-get install curl -y
+fi
+
+if [[ ! -f $(which openssl) ]]; then
+    echo openssl missing. Hit any key to install or CTRL-C to abort..
+    read ; apt-get update ; apt-get install openssl -y
+fi
+
+if [[ ! -f $(which git) ]]; then
+    echo git missing. Hit any key to install or CTRL-C to abort..
+    read ; apt-get update ; apt-get install git -y
+fi
+
+if [[ ! -f $(which mysql) ]]; then
+    echo mysql client missing. Hit any key to install or CTRL-C to abort..
+    read ; apt-get update ; apt-get install mariadb-client -y
+fi
+
+
+# Operating System
+OS=$(lsb_release -c | awk '{ print $2 }')
+OS_DESC=$(lsb_release -d | awk -F':' '{ print $2}')
+
+
+# Architecture
+if [ $(getconf LONG_BIT) = "64" ]
+  then
+    ARCH=x86-64
+  else
+    ARCH=i386
+fi

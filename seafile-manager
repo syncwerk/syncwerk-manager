@@ -18,6 +18,12 @@
 # Uncomment to run in verbose mode
 #set -x
 
+# seafile-manager requires C to be used as locale
+LANGUAGE=C
+LC_ALL=C
+LANG=C
+
+
 # Color coding error messages
 PRNTF_FAIL_START="\n\e[1;31m"
 PRNTF_FAIL_END="\033[0m"
@@ -42,12 +48,14 @@ if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0
 . /opt/seafile-manager/inc/fsck.function
 #. /opt/seafile-manager/inc/group-and-contacts.function
 #. /opt/seafile-manager/inc/group.function
+. /opt/seafile-manager/inc/install.function
 #. /opt/seafile-manager/inc/library.function
 #. /opt/seafile-manager/inc/organizations.function
 #. /opt/seafile-manager/inc/server.function
 #. /opt/seafile-manager/inc/shared-library.function
 #. /opt/seafile-manager/inc/shared-link.function
 #. /opt/seafile-manager/inc/star.function
+. /opt/seafile-manager/inc/system-infos.function
 #. /opt/seafile-manager/inc/thumbnail.function
 #. /opt/seafile-manager/inc/upload-file.function
 
@@ -185,11 +193,48 @@ export-library-to-filesystem)
     export-library-to-filesystem ${2} ${3}
     ;;
 
+install-seafile-professional-on-debian)
+    USAGE="Usage: ${0} install-seafile-professional-on-debian 'YES,_This_Is_A_New_Server_And_No_Harm_Will_Be_Done_If_Something_Goes_Wrong!'"
+    if [[ ! ${2} = "YES,_This_Is_A_New_Server_And_No_Harm_Will_Be_Done_If_Something_Goes_Wrong!" ]]; then echo "You need to agree that you are running this on a fresh server and no harm will be done if something goes wrong."; echo "${USAGE}"; exit; fi
+    printf "${TIMESTAMP} ${0} install-seafile-professional-on-debian \n"
+    seafile-server-professional-installation
+    seafile-server-abort-if-professional-sources-missing
+    seafile-server-abort-if-operating-system-not-supported
+    seafile-server-abort-if-installer-not-root
+    seafile-server-abort-if-user-exist
+    seafile-server-abort-if-directory-exist
+    create-locales
+    update-operating-system
+    system-utils
+    chrony
+    ufw-firewall
+    fail2ban
+    postfix
+    unattended-upgrades
+    seafile-server-requirements
+    nginx-org
+    nginx
+    self-signed-certificate-for-nginx
+    restart-nginx
+    mariadb
+    seafile-server-autostart
+    seafile-server-user
+    seafile-server-install-dir
+    retrieve-seafile-sources
+    create-seafile-database
+    import-seahub-database-structure
+    seafile-server-setup
+    seafile-server-logrotate
+    seafile-server-start
+    seafile-server-change-address
+    seafile-server-summary
+    ;;
+
 *)
-    echo "Usage: ${0} { check-my-account-info | get-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | migrate-account | delete-account | update-note | update-storage | backup-database | check-library-integrity | repair-library-integrity | enable-library-sync-after-repair | export-library-to-filesystem }"
+    echo "Usage: ${0} { check-my-account-info | get-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | migrate-account | delete-account | update-note | update-storage | backup-database | check-library-integrity | repair-library-integrity | enable-library-sync-after-repair | export-library-to-filesystem | install-seafile-professional-on-debian }"
     exit 2
     ;;
 
 esac
-) 2>&1 | sed 's/  */ /g' | xargs | tee -a ~/$(basename ${0}_${ADDRESS}).log
+) 2>&1 | sed 's/  */ /g' | tee -a ~/$(basename ${0}_${ADDRESS}).log
 chmod 600 ~/$(basename ${0}_${ADDRESS}).log
