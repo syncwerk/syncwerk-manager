@@ -33,11 +33,13 @@ if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0
 # Load functions
 . /opt/seafile-manager/inc/account.function
 #. /opt/seafile-manager/inc/avatar.function
+. /opt/seafile-manager/inc/backup.function
 #. /opt/seafile-manager/inc/batch.function
 #. /opt/seafile-manager/inc/blocks.function
 #. /opt/seafile-manager/inc/directory.function
 #. /opt/seafile-manager/inc/file-activities.function
 #. /opt/seafile-manager/inc/file.function
+. /opt/seafile-manager/inc/fsck.function
 #. /opt/seafile-manager/inc/group-and-contacts.function
 #. /opt/seafile-manager/inc/group.function
 #. /opt/seafile-manager/inc/library.function
@@ -47,7 +49,6 @@ if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0
 #. /opt/seafile-manager/inc/shared-link.function
 #. /opt/seafile-manager/inc/star.function
 #. /opt/seafile-manager/inc/thumbnail.function
-. /opt/seafile-manager/inc/tools.function
 #. /opt/seafile-manager/inc/upload-file.function
 
 

@@ -3,7 +3,8 @@ The Seafile manager provides easy management for various Seafile related tasks f
 
 Due to the very early state of the Seafile manager things will very likely break and therefore can harm productive Seafile server installation severely. Data loss is very well possible at this stage. If you care about your data, don't use it on production systems.
 
-All actions are logged to ~/seafile-manager_${SERVER_ADDRESS}).log`
+All actions are logged to `~/seafile-manager_${SERVER_ADDRESS}).log`
+
 
 ## Requirements
 - curl
@@ -43,6 +44,7 @@ chmod 400 ~/.seafile-manager-conf
 ln -s /opt/seafile-manager/seafile-manager /usr/local/bin/seafile-manager
 ```
 
+
 ## Usage / Actions
 These following self-explanatory actions have been added already but not heavily tested:
 
@@ -53,12 +55,14 @@ seafile-manager { check-my-account-info | get-account-info | create-account | up
 | repair-library-integrity | enable-library-sync-after-repair | export-library-to-filesystem }
 ```
 
+
 ## Update
 
 ```
 cd /opt/seafile-manager
 git pull https://github.com/SeafileDE/seafile-manager.git
 ```
+
 
 ## Infos about the Seafile Web API
 - http://manual.seafile.com/develop/web_api.html
@@ -83,6 +87,7 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License for more details.
+
 
 ## Where can I submit bugs or add suggestions?
 Create an issue on Github or just reply in the [corresponding forum thread](https://forum.seafile-server.org/t/seafile-manager-alpha-version/3347).
