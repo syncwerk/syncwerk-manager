@@ -232,8 +232,6 @@ curl -sH "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4'
 | sed 's/"//g' \
 | awk '{ print $2 }' \
 | sort \
-| while read line; do echo -n ${line} ; curl -sH "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${line}/ \
-| grep total \
-| sed 's/"total"://g' \
+| while read line ; do quota=$(curl -sH "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/${line}/ | grep usage | sed 's/"usage"://g ; s/,//g') ; echo ${line} $((${quota}/1073741824))GiB \
 ; done
 }
