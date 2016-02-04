@@ -155,9 +155,9 @@ update-storage)
     update-storage ${2} ${STORAGE_SPACE}
     ;;
 
-list-user-quota)
-    printf "${TIMESTAMP} ${0} list-user-quota "
-    list-user-quota
+get-all-users-quota)
+    printf "${TIMESTAMP} ${0} get-all-users-quota "
+    get-all-users-quota
     ;;
     
 backup-database)
@@ -236,7 +236,7 @@ install-seafile-professional-on-debian)
     ;;
 
 *)
-    echo "Usage: ${0} { check-my-account-info | get-account-info | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | migrate-account | delete-account | update-note | update-storage | backup-database | check-library-integrity | repair-library-integrity | enable-library-sync-after-repair | export-library-to-filesystem | install-seafile-professional-on-debian }"
+    echo "Usage: ${0} { check-my-account-info | get-account-info | get-all-users-quota | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | migrate-account | delete-account | update-note | update-storage | backup-database | check-library-integrity | repair-library-integrity | enable-library-sync-after-repair | export-library-to-filesystem | install-seafile-professional-on-debian }"
     exit 2
     ;;
 
