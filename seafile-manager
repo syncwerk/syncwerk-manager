@@ -155,6 +155,11 @@ update-storage)
     update-storage ${2} ${STORAGE_SPACE}
     ;;
 
+list-user-quota)
+    printf "${TIMESTAMP} ${0} list-user-quota "
+    list-user-quota
+    ;;
+    
 backup-database)
     printf "${TIMESTAMP} ${0} backup-database "
     backup-database
