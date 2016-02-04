@@ -226,8 +226,8 @@ curl -sw "\n" -X DELETE -H "Authorization: Token ${TOKEN}" -H 'Accept: applicati
 # 403 Permission error, only administrator can perform this action
 }
 
-function list-user-quota {
-curl -sH "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' '${PROTO}://${ADDRESS}/api2/accounts/?start=-1&limit=-1' \
+function get-all-users-quota {
+curl -sH "Authorization: Token ${TOKEN}" -H 'Accept: application/json; indent=4' ${PROTO}://${ADDRESS}/api2/accounts/?start=-1\&limit=-1 \
 | grep @ \
 | sed 's/"//g' \
 | awk '{ print $2 }' \
