@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+# Copyright 2015, Alexander Jackson <alexander.jackson@syncwerk.com>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -18,7 +18,7 @@
 # Uncomment to run in verbose mode
 #set -x
 
-# seafile-manager requires C to be used as locale
+# syncwerk-manager requires C to be used as locale
 LANGUAGE=C
 LC_ALL=C
 LANG=C
@@ -32,32 +32,32 @@ PRNTF_USAGE_END="\033[0m\n\n"
 
 
 # Load configuration
-PERMS=$(stat ~/.seafile-manager-conf | sed -n '/^Access: (/{s/Access: (\([0-9]\+\).*$/\1/;p}')
-if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0400 on ~/.seafile-manager-conf and try again.; exit; else . ~/.seafile-manager-conf; fi
+PERMS=$(stat ~/.syncwerk-manager-conf | sed -n '/^Access: (/{s/Access: (\([0-9]\+\).*$/\1/;p}')
+if [[ ${PERMS} != 0400 ]]; then echo Permission error. Change form ${PERMS} to 0400 on ~/.syncwerk-manager-conf and try again.; exit; else . ~/.syncwerk-manager-conf; fi
 
 
 # Load functions
-. /opt/seafile-manager/inc/account.function
-#. /opt/seafile-manager/inc/avatar.function
-. /opt/seafile-manager/inc/backup.function
-#. /opt/seafile-manager/inc/batch.function
-#. /opt/seafile-manager/inc/blocks.function
-#. /opt/seafile-manager/inc/directory.function
-#. /opt/seafile-manager/inc/file-activities.function
-#. /opt/seafile-manager/inc/file.function
-. /opt/seafile-manager/inc/fsck.function
-#. /opt/seafile-manager/inc/group-and-contacts.function
-#. /opt/seafile-manager/inc/group.function
-. /opt/seafile-manager/inc/install.function
-#. /opt/seafile-manager/inc/library.function
-#. /opt/seafile-manager/inc/organizations.function
-#. /opt/seafile-manager/inc/server.function
-#. /opt/seafile-manager/inc/shared-library.function
-#. /opt/seafile-manager/inc/shared-link.function
-#. /opt/seafile-manager/inc/star.function
-. /opt/seafile-manager/inc/system-infos.function
-#. /opt/seafile-manager/inc/thumbnail.function
-#. /opt/seafile-manager/inc/upload-file.function
+. /opt/syncwerk-manager/inc/account.function
+#. /opt/syncwerk-manager/inc/avatar.function
+. /opt/syncwerk-manager/inc/backup.function
+#. /opt/syncwerk-manager/inc/batch.function
+#. /opt/syncwerk-manager/inc/blocks.function
+#. /opt/syncwerk-manager/inc/directory.function
+#. /opt/syncwerk-manager/inc/file-activities.function
+#. /opt/syncwerk-manager/inc/file.function
+. /opt/syncwerk-manager/inc/fsck.function
+#. /opt/syncwerk-manager/inc/group-and-contacts.function
+#. /opt/syncwerk-manager/inc/group.function
+. /opt/syncwerk-manager/inc/install.function
+#. /opt/syncwerk-manager/inc/library.function
+#. /opt/syncwerk-manager/inc/organizations.function
+#. /opt/syncwerk-manager/inc/server.function
+#. /opt/syncwerk-manager/inc/shared-library.function
+#. /opt/syncwerk-manager/inc/shared-link.function
+#. /opt/syncwerk-manager/inc/star.function
+. /opt/syncwerk-manager/inc/system-infos.function
+#. /opt/syncwerk-manager/inc/thumbnail.function
+#. /opt/syncwerk-manager/inc/upload-file.function
 
 
 # Cases
@@ -198,16 +198,16 @@ export-library-to-filesystem)
     export-library-to-filesystem ${2} ${3}
     ;;
 
-install-seafile-professional-on-debian)
-    USAGE="Usage: ${0} install-seafile-professional-on-debian 'YES,_This_Is_A_New_Server_And_No_Harm_Will_Be_Done_If_Something_Goes_Wrong!'"
+install-syncwerk-professional-on-debian)
+    USAGE="Usage: ${0} install-syncwerk-professional-on-debian 'YES,_This_Is_A_New_Server_And_No_Harm_Will_Be_Done_If_Something_Goes_Wrong!'"
     if [[ ! ${2} = "YES,_This_Is_A_New_Server_And_No_Harm_Will_Be_Done_If_Something_Goes_Wrong!" ]]; then echo "You need to agree that you are running this on a fresh server and no harm will be done if something goes wrong."; echo "${USAGE}"; exit; fi
-    printf "${TIMESTAMP} ${0} install-seafile-professional-on-debian \n"
-    seafile-server-professional-installation
-    seafile-server-abort-if-professional-sources-missing
-    seafile-server-abort-if-operating-system-not-supported
-    seafile-server-abort-if-installer-not-root
-    seafile-server-abort-if-user-exist
-    seafile-server-abort-if-directory-exist
+    printf "${TIMESTAMP} ${0} install-syncwerk-professional-on-debian \n"
+    syncwerk-server-professional-installation
+    syncwerk-server-abort-if-professional-sources-missing
+    syncwerk-server-abort-if-operating-system-not-supported
+    syncwerk-server-abort-if-installer-not-root
+    syncwerk-server-abort-if-user-exist
+    syncwerk-server-abort-if-directory-exist
     create-locales
     update-operating-system
     system-utils
@@ -216,27 +216,27 @@ install-seafile-professional-on-debian)
     fail2ban
     postfix
     unattended-upgrades
-    seafile-server-requirements
+    syncwerk-server-requirements
     nginx-org
     nginx
     self-signed-certificate-for-nginx
     restart-nginx
     mariadb
-    seafile-server-autostart
-    seafile-server-user
-    seafile-server-install-dir
-    retrieve-seafile-sources
-    create-seafile-database
+    syncwerk-server-autostart
+    syncwerk-server-user
+    syncwerk-server-install-dir
+    retrieve-syncwerk-sources
+    create-syncwerk-database
     import-seahub-database-structure
-    seafile-server-setup
-    seafile-server-logrotate
-    seafile-server-start
-    seafile-server-change-address
-    seafile-server-summary
+    syncwerk-server-setup
+    syncwerk-server-logrotate
+    syncwerk-server-start
+    syncwerk-server-change-address
+    syncwerk-server-summary
     ;;
 
 *)
-    echo "Usage: ${0} { check-my-account-info | get-account-info | get-all-users-quota | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | migrate-account | delete-account | update-note | update-storage | backup-database | check-library-integrity | repair-library-integrity | enable-library-sync-after-repair | export-library-to-filesystem | install-seafile-professional-on-debian }"
+    echo "Usage: ${0} { check-my-account-info | get-account-info | get-all-users-quota | create-account | update-password | enable-admin | disable-admin | activate-account | deactivate-account | migrate-account | delete-account | update-note | update-storage | backup-database | check-library-integrity | repair-library-integrity | enable-library-sync-after-repair | export-library-to-filesystem | install-syncwerk-professional-on-debian }"
     exit 2
     ;;
 
