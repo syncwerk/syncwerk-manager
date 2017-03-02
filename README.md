@@ -81,7 +81,7 @@ git pull https://github.com/syncwerk/syncwerk-manager.git
 
 
 ## License
-Copyright 2015, Alexander Jackson <alexander.jackson@syncwerk.de>
+Copyright 2015, Alexander Jackson <alexander.jackson@syncwerk.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the [GNU Affero General Public License](http://www.gnu.org/licenses/agpl-3.0.html) as published by
