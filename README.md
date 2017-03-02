@@ -1,9 +1,9 @@
-# Seafile Manager (Alpha Version)
-The Seafile manager provides easy installation of the Seafile server and management for various Seafile related tasks from the Linux command line. It makes heavy usage of the Seafile WebAPI.
+# Syncwerk Manager (Alpha Version)
+The Syncwerk manager provides easy installation of the Syncwerk server and management for various Syncwerk related tasks from the Linux command line. It makes heavy usage of the Syncwerk WebAPI.
 
-Due to the very early state of the Seafile manager things will very likely break and therefore can harm productive Seafile server installation severely. Data loss is very well possible at this stage. If you care about your data, don't use it on production systems.
+Due to the very early state of the Syncwerk manager things will very likely break and therefore can harm productive Syncwerk server installation severely. Data loss is very well possible at this stage. If you care about your data, don't use it on production systems.
 
-All actions are logged to `~/seafile-manager_${SERVER_ADDRESS}).log`
+All actions are logged to `~/syncwerk-manager_${SERVER_ADDRESS}).log`
 
 
 ## Requirements
@@ -20,28 +20,28 @@ Follow the instructions as stated below.
 ### Download
 ```
 cd /opt/
-git clone https://github.com/SeafileDE/seafile-manager.git
-chmod +x seafile-manager/seafile-manager
+git clone https://github.com/syncwerk/syncwerk-manager.git
+chmod +x syncwerk-manager/syncwerk-manager
 ```
 
-### Create ~/.seafile-manager-conf configuration file
+### Create ~/.syncwerk-manager-conf configuration file
 ```
-cp seafile-manager/dev/seafile-manager-example-conf ~/.seafile-manager-conf
-```
-
-Restrict access of ~/.seafile-manager-conf to the owner
-```
-chmod 400 ~/.seafile-manager-conf
+cp syncwerk-manager/dev/syncwerk-manager-example-conf ~/.syncwerk-manager-conf
 ```
 
-- Retrieve Seafile admin token as explained at http://manual.seafile.com/develop/web_api.html
-- Save the TOKEN and connection setting to ~/.seafile-manager-conf as shown in the following format:
-- Review the settings in ~/.seafile-manager-conf and change to reflect your setup
+Restrict access of ~/.syncwerk-manager-conf to the owner
+```
+chmod 400 ~/.syncwerk-manager-conf
+```
+
+- Retrieve Syncwerk admin token as explained at http://manual.syncwerk.com/develop/web_api.html
+- Save the TOKEN and connection setting to ~/.syncwerk-manager-conf as shown in the following format:
+- Review the settings in ~/.syncwerk-manager-conf and change to reflect your setup
 
 
 ### Create symlink
 ```
-ln -s /opt/seafile-manager/seafile-manager /usr/local/bin/seafile-manager
+ln -s /opt/syncwerk-manager/syncwerk-manager /usr/local/bin/syncwerk-manager
 ```
 
 
@@ -49,24 +49,24 @@ ln -s /opt/seafile-manager/seafile-manager /usr/local/bin/seafile-manager
 These following self-explanatory actions have been added already but not heavily tested:
 
 ```
-seafile-manager { check-my-account-info | get-account-info | create-account | update-password \
+syncwerk-manager { check-my-account-info | get-account-info | create-account | update-password \
 | enable-admin | disable-admin | activate-account | deactivate-account | migrate-account \
 | delete-account | update-note | update-storage | backup-database | check-library-integrity \
 | repair-library-integrity | enable-library-sync-after-repair | export-library-to-filesystem \
-| install-seafile-professional-on-debian }
+| install-syncwerk-professional-on-debian }
 ```
 
 
 ## Update
 
 ```
-cd /opt/seafile-manager
-git pull https://github.com/SeafileDE/seafile-manager.git
+cd /opt/syncwerk-manager
+git pull https://github.com/syncwerk/syncwerk-manager.git
 ```
 
 
-## Infos about the Seafile Web API
-- http://manual.seafile.com/develop/web_api.html
+## Infos about the Syncwerk Web API
+- http://manual.syncwerk.com/develop/web_api.html
 
 
 ## Todos
@@ -74,14 +74,14 @@ git pull https://github.com/SeafileDE/seafile-manager.git
 - Add info on how to retrieve the admin token to README.md
 - Add more actions
 - Search for FIXME's and fix ;-)
-- Add expert installation mode for Seafile server
-- Add Seafile server installation for other operating systems, besides Debian
-- Add Seafile CE installation
+- Add expert installation mode for Syncwerk server
+- Add Syncwerk server installation for other operating systems, besides Debian
+- Add Syncwerk CE installation
 - Refine logging abilities 
 
 
 ## License
-Copyright 2015, Alexander Jackson <alexander.jackson@seafile.de>
+Copyright 2015, Alexander Jackson <alexander.jackson@syncwerk.de>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the [GNU Affero General Public License](http://www.gnu.org/licenses/agpl-3.0.html) as published by
@@ -95,4 +95,4 @@ GNU Affero General Public License for more details.
 
 
 ## Where can I submit bugs or add suggestions?
-Create an issue on Github or just reply in the [corresponding forum thread](https://forum.seafile-server.org/t/seafile-manager-alpha-version/3347).
+Create an issue on Github or just reply in the [corresponding forum thread](https://forum.syncwerk.com/t/syncwerk-manager-alpha-version/3347).
